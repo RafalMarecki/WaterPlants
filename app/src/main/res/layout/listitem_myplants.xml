@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="Plant name"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:layout_toRightOf="@id/plant_image_cardview"
             android:layout_alignBottom="@id/plant_image_cardview"
             android:layout_alignTop="@id/plant_image_cardview"/>

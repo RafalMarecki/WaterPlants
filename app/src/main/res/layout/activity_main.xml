@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,5 +11,34 @@
         android:layout_height="match_parent"
         tools:listitem="@layout/list_item_main"/>
 
+    <ImageView
+        android:id="@+id/picture_test"
+        android:layout_height="200dp"
+        android:layout_width="500dp"
+        android:src="@drawable/plants"
+        android:background="@color/white"
+        android:scaleType="centerCrop"
+        android:layout_above="@id/button_camera"
+        />
 
-</LinearLayout>
+    <android.widget.Button
+        android:id="@+id/button_camera"
+        android:text="+"
+        android:textColor="#FFFFFF"
+        android:textSize="60sp"
+        android:gravity="center"
+
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="5dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+
+        android:background="@drawable/shape_camerabutton"
+        android:shadowColor="#666666"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
+
+        />
+</RelativeLayout>

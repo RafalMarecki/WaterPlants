@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WaterPlants"
         tools:targetApi="31">
+        
+        <provider
+            android:authorities="com.example.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/image_provider"/>
+        </provider>
+
+        
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -26,6 +39,7 @@
                 android:value="" />
         </activity>
         <activity android:name=".MyPlantsActivity"></activity>
+        <activity android:name=".PlantDetailsActivity"></activity>
     </application>
 
 </manifest>
