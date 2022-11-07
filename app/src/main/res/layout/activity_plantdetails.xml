@@ -41,7 +41,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
                 android:text="Common name:"
                 android:textSize="16sp" />
@@ -79,6 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/latin_name"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="5dp"
                 android:textSize="16sp"
@@ -90,7 +91,6 @@
                 android:layout_toRightOf="@id/date_static"
                 android:layout_alignBaseline="@id/date_static"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="15dp"
                 android:textSize="16sp"
                 android:text="22.10.22"
                 />
@@ -102,8 +102,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_margin="5dp"
         android:layout_below="@id/plantdetails_names_cardview">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -138,8 +137,7 @@
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         app:cardCornerRadius="20dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_margin="5dp"
         android:layout_toRightOf="@id/plantdetails_wateringreminder_cardview"
         android:layout_below="@id/plantdetails_names_cardview">
         <RelativeLayout
