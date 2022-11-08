@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/chooseplantdetails_scrollview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <!--PICTURE-->
     <RelativeLayout
+        android:id="@+id/chooseplantdetails_relativelayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
         <androidx.cardview.widget.CardView
             android:id="@+id/chooseplantdetails_picture_cardview"
             android:layout_width="match_parent"
@@ -43,7 +45,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginRight="5dp"
-                    android:text="Common name:"
+                    android:text="@string/common_name"
                     android:textSize="16sp" />
                 <TextView
                     android:id="@+id/chooseplantdetails_common_name"
@@ -53,7 +55,7 @@
                     android:layout_alignBaseline="@+id/chooseplantdetails_common_name_static"
                     android:layout_marginRight="15dp"
                     android:textSize="16sp"
-                    android:text="Song of India"
+                    android:text="@string/no_data"
                     />
                 <TextView
                     android:id="@+id/chooseplantdetails_scientificname_static"
@@ -64,7 +66,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginBottom="15dp"
                     android:textSize="16sp"
-                    android:text="Scientific name:"/>
+                    android:text="@string/scientific_name"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_scientificname"
                     android:layout_width="wrap_content"
@@ -73,7 +75,7 @@
                     android:layout_alignBaseline="@id/chooseplantdetails_scientificname_static"
                     android:layout_marginRight="15dp"
                     android:textSize="16sp"
-                    android:text="Dracena Reflexa" />
+                    android:text="@string/no_data" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
         <!--ADD PLANT-->
@@ -83,7 +85,6 @@
             android:layout_height="100dp"
             app:cardCornerRadius="20dp"
             android:layout_margin="5dp"
-
             android:elevation="10dp"
             android:layout_below="@id/chooseplantdetails_names_cardview">
             <RelativeLayout
@@ -96,17 +97,17 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
-                    android:text="97% "
+                    android:text="@string/unknown_probability"
                     android:textSize="28sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_probability_static"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-
-                    android:text="Probability"
+                    android:text="@string/probability"
                     android:textSize="28sp"
-                    android:layout_toRightOf="@id/chooseplantdetails_probability"/>
+                    android:layout_toRightOf="@id/chooseplantdetails_probability"
+                    android:layout_toLeftOf="@id/chooseplantdetails_addplant_button"/>
                 <Button
                     android:id="@+id/chooseplantdetails_addplant_button"
                     android:layout_width="wrap_content"
@@ -114,7 +115,7 @@
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginEnd="15dp"
-                    android:text="ADD PLANT"/>
+                    android:text="@string/add_plant"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
         <!--DESCROPTION-->
@@ -136,7 +137,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Details"
+                    android:text="@string/details"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_description"
@@ -146,7 +147,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_description_static"
-                    android:text="Dasdgfdgfdsgfgdhdfghgdfhdfghdfghdfghdgfhdfgdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfg"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_citation"
@@ -156,7 +157,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="2dp"
                     android:layout_below="@id/chooseplantdetails_description"
-                    android:text="Citation"
+                    android:text="@string/no_data"
                     android:textSize="10sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_license_name"
@@ -166,7 +167,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="10dp"
                     android:layout_below="@id/chooseplantdetails_citation"
-                    android:text="License_name"
+                    android:text="@string/no_data"
                     android:textSize="10sp"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -189,7 +190,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Synonyms"
+                    android:text="@string/synonyms"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_synonyms"
@@ -199,7 +200,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="10dp"
                     android:layout_below="@id/chooseplantdetails_synonyms_static"
-                    android:text="Dasdgfdgfdsgfgdhdfghgdfhdfghdfghdfghdgfhdfgdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfg"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -221,7 +222,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Propagation methods"
+                    android:text="@string/propagation_methods"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_propagationmethods"
@@ -231,7 +232,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="10dp"
                     android:layout_below="@id/chooseplantdetails_propagationmethods_static"
-                    android:text="Dasdgfdgfdsgfgdhdfghgdfhdfghdfghdfghdgfhdfgdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfg"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -254,7 +255,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Edible parts"
+                    android:text="@string/edible_parts"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_edibleparts"
@@ -264,7 +265,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginBottom="10dp"
                     android:layout_below="@id/chooseplantdetails_edibleparts_static"
-                    android:text="Dasdgfdgfdsgfgdhdfghgdfhdfghdfghdfghdgfhdfgdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfghdfg"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -287,7 +288,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Structured name"
+                    android:text="@string/structured_name"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_structuredname_genus_static"
@@ -296,7 +297,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_structuredname_static"
-                    android:text="Genus: "
+                    android:text="@string/genus"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_structuredname_genus"
@@ -305,7 +306,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_toRightOf="@id/chooseplantdetails_structuredname_genus_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_structuredname_genus_static"
-                    android:text="genus"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_structuredname_species_static"
@@ -314,7 +315,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_structuredname_genus"
-                    android:text="Species: "
+                    android:text="@string/species"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_structuredname_species"
@@ -323,7 +324,7 @@
                     android:layout_marginBottom="15dp"
                     android:layout_toRightOf="@id/chooseplantdetails_structuredname_species_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_structuredname_species_static"
-                    android:text="species"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
@@ -346,7 +347,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:text="Taxonomy"
+                    android:text="@string/taxonomy"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_class_static"
@@ -355,7 +356,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_static"
-                    android:text="Class: "
+                    android:text="@string/cla"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_class"
@@ -364,7 +365,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_class_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_class_static"
-                    android:text="class"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_family_static"
@@ -373,7 +374,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_class"
-                    android:text="Family: "
+                    android:text="@string/family"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_family"
@@ -382,7 +383,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_family_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_family_static"
-                    android:text="family"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_genus_static"
@@ -391,7 +392,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_family"
-                    android:text="Genus: "
+                    android:text="@string/genus"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_genus"
@@ -400,7 +401,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_genus_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_genus_static"
-                    android:text="genus"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_kingdom_static"
@@ -409,7 +410,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_genus"
-                    android:text="Kingdom: "
+                    android:text="@string/kingdom"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_kingdom"
@@ -418,7 +419,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_kingdom_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_kingdom_static"
-                    android:text="kingdom"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_order_static"
@@ -427,7 +428,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_kingdom"
-                    android:text="Order: "
+                    android:text="@string/order"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_order"
@@ -436,7 +437,7 @@
                     android:layout_marginBottom="5dp"
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_order_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_order_static"
-                    android:text="order"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_phylum_static"
@@ -445,7 +446,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_order"
-                    android:text="Order: "
+                    android:text="@string/phylum"
                     android:textSize="16sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_phylum"
@@ -454,7 +455,7 @@
                     android:layout_marginBottom="15dp"
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_phylum_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_phylum_static"
-                    android:text="order"
+                    android:text="@string/no_data"
                     android:textSize="16sp"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>

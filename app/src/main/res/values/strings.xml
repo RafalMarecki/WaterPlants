@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">WaterPlants</string>
+    <string name="no_data">No data found</string>
+    <string name="common_name">Common name:</string>
+    <string name="scientific_name">Scientific name:</string>
+    <string name="unknown_probability">-% </string>
+    <string name="probability">Probability</string>
+    <string name="add_plant">ADD PLANT</string>
+    <string name="details">Details</string>
+    <string name="synonyms">Synonyms</string>
+    <string name="propagation_methods">Propagation methods</string>
+    <string name="edible_parts">Edible parts</string>
+    <string name="structured_name">Structured name</string>
+    <string name="genus">Genus: </string>
+    <string name="species">Species: </string>
+    <string name="taxonomy">Taxonomy</string>
+    <string name="cla">Class: </string>
+    <string name="family">Family: </string>
+    <string name="kingdom">Kingdom: </string>
+    <string name="order">Order: </string>
+    <string name="phylum">Phylum: </string>
 </resources>
