@@ -25,12 +25,14 @@ class ChoosePlantAdapter(private val context : Activity, private val identifiedP
             Picasso.with(view.context)
                 .load(identifiedPlantArrayList[position].plant_details.wiki_image?.value)
                 .into(plantImage)
-        }else if(identifiedPlantArrayList[position].similar_images?.get(index = 0)?.url != null)
-        {
-            Picasso.with(view.context)
-                .load(identifiedPlantArrayList[position].similar_images?.get(index = 0)?.url)
-                .into(plantImage)
-        } else
+        }
+//        else if(identifiedPlantArrayList[position].similar_images?.get(index = 0)?.url != null)
+//        {
+//            Picasso.with(view.context)
+//                .load(identifiedPlantArrayList[position].similar_images?.get(index = 0)?.url)
+//                .into(plantImage)
+//        }
+        else
         {
             plantImage.setImageResource(R.drawable.noimage)
         }

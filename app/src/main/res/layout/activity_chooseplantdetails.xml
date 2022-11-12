@@ -137,7 +137,7 @@
                     android:layout_marginRight="15dp"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:text="@string/details"
+                    android:text="@string/description"
                     android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_description"

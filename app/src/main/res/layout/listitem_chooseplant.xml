@@ -69,7 +69,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_below="@id/chooseplant_probability"
-                        android:text="Add plant"/>
+                        android:text="Add plant" />
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>

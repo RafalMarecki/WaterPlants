@@ -1,9 +1,15 @@
 package com.example.waterplants
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
+import com.example.waterplants.api.model.PlantDetails
+import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityChooseplantdetailsBinding
 import com.squareup.picasso.Picasso
 
@@ -15,76 +21,128 @@ class ChoosePlantDetailsActivity : AppCompatActivity() {
         binding = ActivityChooseplantdetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val dbHelper = DataBaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+        val saveInfoToast = Toast.makeText(applicationContext, "Plant saved", Toast.LENGTH_SHORT)
+        val errorToastInfo = Toast.makeText(applicationContext, "Null exception while saving", Toast.LENGTH_SHORT)
+
         val picture : ImageView = binding.chooseplantdetailsPicture
         val commonName : TextView = binding.chooseplantdetailsCommonName
         val scientificName : TextView = binding.chooseplantdetailsScientificname
         val probability : TextView = binding.chooseplantdetailsProbability
+        val descriptionCardView : CardView = binding.chooseplantdetailsDescriptionCardview
         val description : TextView = binding.chooseplantdetailsDescription
         val citation : TextView = binding.chooseplantdetailsCitation
         val licenseName : TextView = binding.chooseplantdetailsLicenseName
+        val synonymsCardView : CardView = binding.chooseplantdetailsSynonymsCardview
         val synonyms : TextView = binding.chooseplantdetailsSynonyms
+        val propagationMethodsCardView : CardView = binding.chooseplantdetailsPropagationmethodsCardview
         val propagationMethods : TextView = binding.chooseplantdetailsPropagationmethods
+        val ediblePartsCardView : CardView = binding.chooseplantdetailsEdiblepartsCardview
         val edibleParts : TextView = binding.chooseplantdetailsEdibleparts
-        // Structured name
+        val structuredNameCardView : CardView = binding.chooseplantdetailsStructurednameCardview
         val genus : TextView = binding.chooseplantdetailsStructurednameGenus
         val species : TextView = binding.chooseplantdetailsStructurednameSpecies
-        // Taxonomy
+        val taxonomyCardView : CardView = binding.chooseplantdetailsTaxonomyCardview
         val taxonomyClass : TextView = binding.chooseplantdetailsTaxonomyClass
         val taxonomyFamily : TextView = binding.chooseplantdetailsTaxonomyFamily
         val taxonomyGenus : TextView = binding.chooseplantdetailsTaxonomyGenus
         val taxonomyKingdom : TextView = binding.chooseplantdetailsTaxonomyKingdom
         val taxonomyPhylum : TextView = binding.chooseplantdetailsTaxonomyPhylum
+        val button : Button = binding.chooseplantdetailsAddplantButton
 
-        // Picture
-        if (chosenPlant.plant_details.wiki_image?.value != null) {
-            Picasso.with(applicationContext)
-                .load(chosenPlant.plant_details.wiki_image?.value)
-                .into(picture)
-        } else if (chosenPlant.similar_images?.get(index = 0)?.url != null)
-        {
-            Picasso.with(applicationContext)
-                .load(chosenPlant.similar_images?.get(index = 0)?.url)
-                .into(picture)
-        } else
-        {
-            picture.setImageResource(R.drawable.noimage)
-        }
-        // Plant details
-        commonName.text = chosenPlant.plant_name
-        scientificName.text = chosenPlant.plant_details.scientific_name
-        probability.text = (chosenPlant.probability*100).toInt().toString() + "%"
-        description.text = chosenPlant.plant_details.wiki_description?.value
-        citation.text = chosenPlant.plant_details.wiki_description?.citation
-        licenseName.text = chosenPlant.plant_details.wiki_description?.license_name
-        // `/n` separated
-        synonyms.text = nullableListStringIntoString(chosenPlant.plant_details.synonyms)
-        propagationMethods.text = nullableListStringIntoString(chosenPlant.plant_details.propagation_methods)
-        edibleParts.text = nullableListStringIntoString(chosenPlant.plant_details.edible_parts)
-        // Structured name
-        genus.text = chosenPlant.plant_details.structured_name?.genus
-        species.text = chosenPlant.plant_details.structured_name?.species
-        // Taxonomy
-        taxonomyClass.text = chosenPlant.plant_details.taxonomy?.`class`
-        taxonomyFamily.text = chosenPlant.plant_details.taxonomy?.family
-        taxonomyGenus.text = chosenPlant.plant_details.taxonomy?.genus
-        taxonomyKingdom.text = chosenPlant.plant_details.taxonomy?.kingdom
-        taxonomyPhylum.text = chosenPlant.plant_details.taxonomy?.phylum
-    }
+        if (chosenPlant != null) {
+            val plantDetails : PlantDetails? = chosenPlant?.plant_details
 
-    fun nullableListStringIntoString (list : List<String>?) : String {
-        var text = ""
-        list?.let {
-            for (i in it.indices)
-            {
-                if (i == 0)
-                {
-                    text += it.get(index = i)
-                } else
-                {
-                    text += "\n" + it.get(index = i)
-                }
+            // Picture
+            if (plantDetails?.wiki_image?.value != null) {
+                Picasso.with(applicationContext)
+                    .load(plantDetails.wiki_image.value)
+                    .into(picture)
+            }
+//            else if (chosenPlant?.similar_images?.get(index = 0)?.url != null) {
+//                Picasso.with(applicationContext)
+//                    .load(chosenPlant?.similar_images?.get(index = 0)?.url)
+//                    .into(picture)
+//            }
+            else {
+                picture.setImageResource(R.drawable.noimage)
+            }
+
+            // Plant details
+            commonName.text = chosenPlant?.plant_name
+            scientificName.text = plantDetails?.scientific_name
+            if (chosenPlant?.probability != null) {
+                probability.text = (chosenPlant!!.probability * 100).toInt().toString() + "%"
+            }
+            // Description
+            if (plantDetails?.wiki_description != null) {
+                descriptionCardView.visibility = View.VISIBLE
+                description.text = plantDetails.wiki_description.value
+                citation.text = plantDetails.wiki_description.citation
+                licenseName.text = plantDetails.wiki_description.license_name
+            } else {
+                descriptionCardView.visibility = View.GONE
+            }
+            // Synonyms
+            if (plantDetails?.synonyms != null) {
+                synonymsCardView.visibility = View.VISIBLE
+                synonyms.text = nullableListStringIntoString(plantDetails.synonyms)
+            } else {
+                synonymsCardView.visibility = View.GONE
+            }
+            // Propagation methods
+            if (plantDetails?.propagation_methods != null) {
+                propagationMethodsCardView.visibility = View.VISIBLE
+                propagationMethods.text =
+                    nullableListStringIntoString(plantDetails.propagation_methods)
+            } else {
+                propagationMethodsCardView.visibility = View.GONE
+            }
+            // Edible parts
+            if (plantDetails?.edible_parts != null) {
+                ediblePartsCardView.visibility = View.VISIBLE
+                edibleParts.text = nullableListStringIntoString(plantDetails.edible_parts)
+            } else {
+                ediblePartsCardView.visibility = View.GONE
+            }
+            // Structured name
+            if (plantDetails?.structured_name != null) {
+                structuredNameCardView.visibility = View.VISIBLE
+                genus.text = plantDetails.structured_name.genus
+                species.text = plantDetails.structured_name.species
+            } else {
+                structuredNameCardView.visibility = View.GONE
+            }
+            // Taxonomy
+            if (plantDetails?.taxonomy != null) {
+                taxonomyCardView.visibility = View.VISIBLE
+                taxonomyClass.text = plantDetails.taxonomy.`class`
+                taxonomyFamily.text = plantDetails.taxonomy.family
+                taxonomyGenus.text = plantDetails.taxonomy.genus
+                taxonomyKingdom.text = plantDetails.taxonomy.kingdom
+                taxonomyPhylum.text = plantDetails.taxonomy.phylum
+            } else {
+                taxonomyCardView.visibility = View.GONE
+            }
+            button.setOnClickListener {
+                dbHelper.addPlantToDB(db, chosenPlant!!)
+                saveInfoToast.show()
             }
         }
-        return text
     }
+}
+
+fun nullableListStringIntoString (list : List<String>?) : String {
+    var text = ""
+    list?.let {
+        for (i in it.indices) {
+            if (i == 0) {
+                text += it.get(index = i)
+            } else {
+                text += "\n" + it.get(index = i)
+            }
+        }
+    }
+    return text
 }

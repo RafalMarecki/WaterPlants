@@ -2,6 +2,7 @@ package com.example.waterplants
 
 import android.app.Activity
 import android.content.Intent
+import android.database.CursorWindow
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
@@ -15,15 +16,18 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.waterplants.api.PlantAPI
 import com.example.waterplants.api.createPlantAPIClient
+import com.example.waterplants.api.model.ResponseIdentify
 import com.example.waterplants.api.model.Suggestion
 import com.example.waterplants.api.request.IdentifyRequest
+import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityMainBinding
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.io.File
+import java.lang.reflect.Field
 
 // Photo related variables
-private lateinit var photoFile: File
+lateinit var photoFile: File
 private const val  FILE_NAME =  "photo.jpg"
 private lateinit var takePictureIntent: Intent
 private lateinit var fileProvider: Uri
@@ -31,6 +35,7 @@ private const val REQUEST_CODE = 200
 
 // GLOBAL VARIABLE RESULT OF API
 public var identifiedPlantArrayList : ArrayList<IdentifiedPlant> = ArrayList()
+public var  responseIdentify : ArrayList<ResponseIdentify> = ArrayList()
 
 class MainActivity : AppCompatActivity()
 {
@@ -51,7 +56,26 @@ class MainActivity : AppCompatActivity()
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Creating database
+        val dbHelper = DataBaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+
+        try {
+            val field : Field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
+            field.isAccessible = true
+            field.set(null, 100 * 1024 * 1024)
+        } catch (e: java.lang.Exception)
+        {
+            println("Essa")
+        }
+
         menuItemArrayList = ArrayList()
+
+        // TODO CZYSZCZENIE ZMIENNEJ GLOBALNEJ
+        responseIdentify.clear()
+        identifiedPlantArrayList.clear()
+
 
         // Feeding the main list view with content
         for(i in menuItemName.indices) {
@@ -111,10 +135,11 @@ class MainActivity : AppCompatActivity()
             // Sending image to API, assigning results to global ArrayList of identified plants and starting ChoosePlantActivity
             lifecycleScope.launch {
                 var res = sendImageToAPI(encodeImageBase64(photoFile)).await()
+                responseIdentify.add(res)
                 for (i in res.suggestions.indices)
                 {
                     var singleSuggestion : Suggestion = res.suggestions.get(index = i)
-                    var identifiedPlant = IdentifiedPlant(singleSuggestion.id, singleSuggestion.plant_details, singleSuggestion.plant_name, singleSuggestion.probability, singleSuggestion.similar_images)
+                    var identifiedPlant = IdentifiedPlant(singleSuggestion.id, singleSuggestion.plant_details, singleSuggestion.plant_name, singleSuggestion.probability)
                     identifiedPlantArrayList.add(identifiedPlant)
                 }
                 startActivity(Intent(applicationContext, ChoosePlantActivity::class.java))
