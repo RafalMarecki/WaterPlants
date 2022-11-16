@@ -30,6 +30,7 @@ class PlantDetailsActivity : AppCompatActivity() {
         val picture : ImageView = binding.plantdetailsPicture
         val commonName : TextView = binding.commonName
         val scientificName : TextView = binding.latinName
+        val date : TextView = binding.date
         val descriptionCardView : CardView = binding.plantdetailsDescriptionCardview
         val description : TextView = binding.plantdetailsDescription
         val citation : TextView = binding.plantdetailsCitation
@@ -59,7 +60,6 @@ class PlantDetailsActivity : AppCompatActivity() {
         binding.spinnerNumberfertilizing.adapter = adapterNumberFertilizing
 
         if (plantChosen != null) {
-
             // Picture
             if (plantChosen?.picture != null) {
                 picture.setImageBitmap(plantChosen?.picture)
@@ -67,12 +67,13 @@ class PlantDetailsActivity : AppCompatActivity() {
             else {
                 picture.setImageResource(R.drawable.noimage)
             }
-
             // Plant details
             commonName.text = plantChosen?.name
             scientificName.text = plantChosen?.scientificName
+            date.text = plantChosen?.dateWatered.toString()
+//                plantChosen?.dateAdded.toString()
             // Description
-            if (plantChosen?.descriptionValue != null) {
+            if (plantChosen?.descriptionValue != null || plantChosen?.descriptionValue != "") {
                 descriptionCardView.visibility = View.VISIBLE
                 description.text = plantChosen?.descriptionValue
                 citation.text = plantChosen?.descriptionCitation
@@ -81,28 +82,28 @@ class PlantDetailsActivity : AppCompatActivity() {
                 descriptionCardView.visibility = View.GONE
             }
             // Synonyms
-            if (plantChosen?.synonyms != null) {
+            if (plantChosen?.synonyms != null || plantChosen?.synonyms != "") {
                 synonymsCardView.visibility = View.VISIBLE
                 synonyms.text = plantChosen?.synonyms
             } else {
                 synonymsCardView.visibility = View.GONE
             }
             // Propagation methods
-            if (plantChosen?.propagationMethods != null) {
+            if (plantChosen?.propagationMethods != null || plantChosen?.propagationMethods != "") {
                 propagationMethodsCardView.visibility = View.VISIBLE
                 propagationMethods.text = plantChosen?.propagationMethods
             } else {
                 propagationMethodsCardView.visibility = View.GONE
             }
             // Edible parts
-            if (plantChosen?.edibleParts != null) {
+            if (plantChosen?.edibleParts != null || plantChosen?.edibleParts != "") {
                 ediblePartsCardView.visibility = View.VISIBLE
                 edibleParts.text = plantChosen?.edibleParts
             } else {
                 ediblePartsCardView.visibility = View.GONE
             }
             // Structured name
-            if (plantChosen?.structuredNameGenus != null && plantChosen?.structuredNameSpecies != null) {
+            if ((plantChosen?.structuredNameGenus != null && plantChosen?.structuredNameSpecies != null) || (plantChosen?.structuredNameGenus != "" && plantChosen?.structuredNameSpecies != "")) {
                 structuredNameCardView.visibility = View.VISIBLE
                 genus.text = plantChosen?.structuredNameGenus
                 species.text = plantChosen?.structuredNameSpecies
@@ -110,7 +111,7 @@ class PlantDetailsActivity : AppCompatActivity() {
                 structuredNameCardView.visibility = View.GONE
             }
             // Taxonomy
-            if (plantChosen?.taxonomyClass != null && plantChosen?.taxonomyFamily != null && plantChosen?.taxonomyGenus != null && plantChosen?.taxonomyKingdom != null && plantChosen?.taxonomyPhylum != null && plantChosen?.taxonomyOrder != null) {
+            if ((plantChosen?.taxonomyClass != null && plantChosen?.taxonomyFamily != null && plantChosen?.taxonomyGenus != null && plantChosen?.taxonomyKingdom != null && plantChosen?.taxonomyPhylum != null && plantChosen?.taxonomyOrder != null) || (plantChosen?.taxonomyClass != "" && plantChosen?.taxonomyFamily != "" && plantChosen?.taxonomyGenus != "" && plantChosen?.taxonomyKingdom != "" && plantChosen?.taxonomyPhylum != "" && plantChosen?.taxonomyOrder != "")) {
                 taxonomyCardView.visibility = View.VISIBLE
                 taxonomyClass.text = plantChosen?.taxonomyClass
                 taxonomyFamily.text = plantChosen?.taxonomyFamily

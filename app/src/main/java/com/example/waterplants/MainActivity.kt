@@ -19,7 +19,6 @@ import com.example.waterplants.api.createPlantAPIClient
 import com.example.waterplants.api.model.ResponseIdentify
 import com.example.waterplants.api.model.Suggestion
 import com.example.waterplants.api.request.IdentifyRequest
-import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityMainBinding
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
@@ -36,6 +35,7 @@ private const val REQUEST_CODE = 200
 // GLOBAL VARIABLE RESULT OF API
 public var identifiedPlantArrayList : ArrayList<IdentifiedPlant> = ArrayList()
 public var  responseIdentify : ArrayList<ResponseIdentify> = ArrayList()
+var plantsToWater : ArrayList<Plant> = ArrayList()
 
 class MainActivity : AppCompatActivity()
 {
@@ -58,8 +58,8 @@ class MainActivity : AppCompatActivity()
         setContentView(binding.root)
 
         // Creating database
-        val dbHelper = DataBaseHelper(applicationContext)
-        val db = dbHelper.writableDatabase
+//        val dbHelper = DataBaseHelper(applicationContext)
+//        val db = dbHelper.writableDatabase
 
         try {
             val field : Field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
@@ -70,12 +70,18 @@ class MainActivity : AppCompatActivity()
             println("Essa")
         }
 
+//        val plantsToWater = dbHelper.selectPlantsToWater(db)
+//        Log.d("dupa", "$plantsToWater")
+//        for (i in plantsToWater.indices) {
+//            Log.d("dateWatered", "${plantsToWater[i].dateWatered.toString()}")
+//            Log.d("daysWatering", "${plantsToWater[i].daysWatering}")
+//        }
+//        Toast.makeText(applicationContext,"${plantsToWater.get(index = 0).name}", Toast.LENGTH_SHORT).show()
         menuItemArrayList = ArrayList()
 
         // TODO CZYSZCZENIE ZMIENNEJ GLOBALNEJ
         responseIdentify.clear()
         identifiedPlantArrayList.clear()
-
 
         // Feeding the main list view with content
         for(i in menuItemName.indices) {
@@ -88,7 +94,7 @@ class MainActivity : AppCompatActivity()
             when(position)
             {
                 0 -> startActivity(Intent(applicationContext, MyPlantsActivity::class.java))
-                1 -> startActivity(Intent(applicationContext, PlantDetailsActivity::class.java))
+                1 -> startActivity(Intent(applicationContext, WateringActivity::class.java))
             }
         }
 

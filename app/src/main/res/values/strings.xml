@@ -22,4 +22,5 @@
     <string name="watering">Watering</string>
     <string name="fertilizing">Fertilizing</string>
     <string name="added_date">Added date:</string>
+    <string name="water">Water</string>
 </resources>

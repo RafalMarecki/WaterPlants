@@ -1,5 +1,6 @@
 package com.example.waterplants
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -59,16 +60,9 @@ class ChoosePlantDetailsActivity : AppCompatActivity() {
                 Picasso.with(applicationContext)
                     .load(plantDetails.wiki_image.value)
                     .into(picture)
-            }
-//            else if (chosenPlant?.similar_images?.get(index = 0)?.url != null) {
-//                Picasso.with(applicationContext)
-//                    .load(chosenPlant?.similar_images?.get(index = 0)?.url)
-//                    .into(picture)
-//            }
-            else {
+            } else {
                 picture.setImageResource(R.drawable.noimage)
             }
-
             // Plant details
             commonName.text = chosenPlant?.plant_name
             scientificName.text = plantDetails?.scientific_name
@@ -128,6 +122,8 @@ class ChoosePlantDetailsActivity : AppCompatActivity() {
             button.setOnClickListener {
                 dbHelper.addPlantToDB(db, chosenPlant!!)
                 saveInfoToast.show()
+                startActivity(Intent(applicationContext, MyPlantsActivity::class.java))
+                finish()
             }
         }
     }

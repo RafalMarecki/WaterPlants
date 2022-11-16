@@ -3,7 +3,7 @@ package com.example.waterplants
 import android.graphics.Bitmap
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.util.*
+import java.time.LocalDate
 
 //import android.os.Parcel
 //import android.os.Parcelable
@@ -15,10 +15,10 @@ class Plant (var id : Int,
              var idApi : Int,
              var name : String,
              var picture : Bitmap,
-             var dateAdded : Date,
-             var dateWatered : Date,
+             var dateAdded : LocalDate,
+             var dateWatered : LocalDate,
              var daysWatering : Int,
-             var dateFertilized : Date,
+             var dateFertilized : LocalDate,
              var daysFertilizing : Int,
              var scientificName : String?,
              var commonNames : String?,
