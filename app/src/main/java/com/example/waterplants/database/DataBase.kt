@@ -75,7 +75,8 @@ object CommandSQL {
     const val DROP_TABLE = "DROP TABLE IF EXISTS ${MyPlantsTable.TABLE_NAME}"
     const val SELECT = "SELECT * FROM ${MyPlantsTable.TABLE_NAME}"
     const val SELECT_PLANTS_TO_WATER = "SELECT * FROM ${MyPlantsTable.TABLE_NAME} WHERE ${MyPlantsTable.TABLE_COLUMN_DATE_WATERED}<=DATE(?, '-' || ${MyPlantsTable.TABLE_COLUMN_DAYS_WATERING} || ' days')"
-    const val UPDATE_WATERED_PLANT = "UPDATE ${MyPlantsTable.TABLE_NAME} SET ${MyPlantsTable.TABLE_COLUMN_DATE_WATERED} = ? WHERE ${MyPlantsTable.TABLE_COLUMN_ID_API} = ?"
+    const val SELECT_PLANTS_TO_FERTILIZE = "SELECT * FROM ${MyPlantsTable.TABLE_NAME} WHERE ${MyPlantsTable.TABLE_COLUMN_DATE_FERTILIZED}<=DATE(?, '-' || ${MyPlantsTable.TABLE_COLUMN_DAYS_FERTILIZING} || ' days')"
+    const val SELECT_PLANTS_WHERE_ID_API = "SELECT * FROM ${MyPlantsTable.TABLE_NAME} WHERE ${MyPlantsTable.TABLE_COLUMN_ID_API}=?"
 }
 
 class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable.TABLE_NAME, null, 1){
@@ -88,8 +89,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
         onCreate(db)
     }
 
-    fun setCursorSize()
-    {
+    fun setCursorSize() {
         try {
             val field : Field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
             field.isAccessible = true
@@ -140,15 +140,12 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
         }
     }
 
+    fun deletePlant (db: SQLiteDatabase, plant : Plant) {
+        val whereClause = "${MyPlantsTable.TABLE_COLUMN_ID_API}=?"
+        db.delete(MyPlantsTable.TABLE_NAME, whereClause, arrayOf(plant.idApi.toString()))
+    }
+
     fun selectPlants (db: SQLiteDatabase) : ArrayList<Plant> {
-//        try {
-//            val field : Field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
-//            field.isAccessible = true
-//            field.set(null, 100 * 1024 * 1024)
-//        } catch (e: java.lang.Exception)
-//        {
-//            println("Essa")
-//        }
         var plantList : ArrayList<Plant> = ArrayList()
         db.let {
             val cursor = db.rawQuery(CommandSQL.SELECT, null)
@@ -243,20 +240,112 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                 start = cursor.moveToNext()
             }
             cursor.close()
-            db.close()
+//            db.close()
         }
         return plantList
     }
 
-    fun selectPlantsToWater (db: SQLiteDatabase) : ArrayList<Plant> {
+    fun selectPlantByIdAPI(db: SQLiteDatabase, idAPI : Int) : Plant? {
+        try {
+            val cursor = db.rawQuery(CommandSQL.SELECT_PLANTS_WHERE_ID_API, arrayOf(idAPI.toString()))
+            Log.d("Cursor", "$cursor")
+            cursor.moveToFirst()
+
+            val id = cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID))
+            val idApi =
+                cursor.getInt(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_ID_API))
+            val plantName =
+                cursor.getString(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_PLANT_NAME))
+            val picture = convertByteArrayToBitmap(
+                cursor.getBlob(
+                    cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_PICTURE)
+                )
+            )
+            val dateAdded =
+                cursor.getString(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_DATE_ADDED))
+            val dateWatered = cursor.getString(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_DATE_WATERED))
+            val daysWatering =
+                cursor.getInt(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_DAYS_WATERING))
+            val dateFertilized = cursor.getString(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_DATE_FERTILIZED))
+            val daysFertilizing =
+                cursor.getInt(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_DAYS_FERTILIZING))
+            val scientificName =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_SCIENTIFIC_NAME))
+            val commonNames =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_SCIENTIFIC_NAME))
+            val edibleParts =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_EDIBLE_PARTS))
+            val propagationMethods =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_PROPAGATION_METHODS))
+            val structGenus =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_STRUCTURED_NAME_GENUS))
+            val structSpecies =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_STRUCTURED_NAME_SPECIES))
+            val synonyms =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_SYNONYMS))
+            val taxonomyClass =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_CLASS))
+            val taxonomyFamily =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_FAMILY))
+            val taxonomyGenus =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS))
+            val taxonomyKingdom =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_KINGDOM))
+            val taxonomyOrder =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_ORDER))
+            val taxonomyPhylum =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_PHYLUM))
+            val descValue =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_WIKIDESCRIPTION_VALUE))
+            val descLicense =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_WIKIDESCRIPTION_LICENSE))
+            val descCitation =
+                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_WIKIDESCRIPTION_CITATION))
+
+            val plant = Plant(
+                    id,
+                    idApi,
+                    plantName,
+                    picture,
+                    LocalDate.parse(dateAdded),
+                    LocalDate.parse(dateWatered),
+                    daysWatering,
+                    LocalDate.parse(dateFertilized),
+                    daysFertilizing,
+                    scientificName,
+                    commonNames,
+                    edibleParts,
+                    propagationMethods,
+                    structGenus,
+                    structSpecies,
+                    synonyms,
+                    taxonomyClass,
+                    taxonomyFamily,
+                    taxonomyGenus,
+                    taxonomyKingdom,
+                    taxonomyOrder,
+                    taxonomyPhylum,
+                    descValue,
+                    descLicense,
+                    descCitation
+                )
+            cursor.close()
+            return plant
+        } catch (e : SQLiteException) {
+            return null
+            throw e
+            Log.d("SQL EXCEPTION", "SQL EXCEPTION")
+        }
+    }
+
+    fun selectPlantsToWaterOrFertilize (db: SQLiteDatabase, query : String) : ArrayList<Plant> {
         var plantList : ArrayList<Plant> = ArrayList()
         plantList.clear()
         db.let {
             val date = LocalDate.now(ZoneId.systemDefault()).toString()
-            val cursor = db.rawQuery(CommandSQL.SELECT_PLANTS_TO_WATER, arrayOf(date))
+            val cursor = db.rawQuery(query, arrayOf(date))
             var start = cursor.moveToFirst()
-            while(start)
-            {
+            while(start) {
                 try {
                     val id = cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID))
                     val idApi =
@@ -338,8 +427,8 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                             descCitation
                         )
                     )
-                } catch (e : SQLiteException)
-                {
+                } catch (e : SQLiteException) {
+                    throw e
                     Log.d("SQL EXCEPTION", "SQL EXCEPTION")
                 }
                 start = cursor.moveToNext()
@@ -362,6 +451,57 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                 values,
                 "${MyPlantsTable.TABLE_COLUMN_ID_API}=?",
                 arrayOf(id))
+            Log.d("RESULT", "$result")
+        } catch (e : SQLiteException) {
+            throw e
+        } finally {
+            db.close()
+        }
+    }
+
+    fun updateFertilizing (db: SQLiteDatabase, plant : Plant) {
+        val date = LocalDate.now(ZoneId.systemDefault()).toString()
+        val id = plant.idApi.toString()
+
+        val values = ContentValues()
+        values.put(MyPlantsTable.TABLE_COLUMN_DATE_FERTILIZED, date)
+        try {
+            val result = db.update(
+                MyPlantsTable.TABLE_NAME,
+                values,
+                "${MyPlantsTable.TABLE_COLUMN_ID_API}=?",
+                arrayOf(id))
+            Log.d("RESULT", "$result")
+        } catch (e : SQLiteException) {
+            throw e
+        } finally {
+            db.close()
+        }
+    }
+
+    fun updateReminders (db: SQLiteDatabase, idAPI : Int, timeWateringIsMonth : Boolean, numberWatering : String, timeFertilizingIsMonth : Boolean, numberFertilizing : String) {
+        var daysWatering : String
+        var daysFertilizing : String
+        val values = ContentValues()
+
+        if (timeWateringIsMonth){
+            daysWatering = (numberWatering.toInt()*30).toString()
+        } else {
+            daysWatering = numberWatering
+        }
+        if (timeFertilizingIsMonth){
+            daysFertilizing = (numberFertilizing.toInt()*30).toString()
+        } else {
+            daysFertilizing = numberFertilizing
+        }
+        values.put(MyPlantsTable.TABLE_COLUMN_DAYS_WATERING, daysWatering)
+        values.put(MyPlantsTable.TABLE_COLUMN_DAYS_FERTILIZING, daysFertilizing)
+        try {
+            val result = db.update(
+                MyPlantsTable.TABLE_NAME,
+                values,
+                "${MyPlantsTable.TABLE_COLUMN_ID_API}=?",
+                arrayOf(idAPI.toString()))
             Log.d("RESULT", "$result")
         } catch (e : SQLiteException) {
             throw e

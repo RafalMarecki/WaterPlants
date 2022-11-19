@@ -9,8 +9,13 @@
         android:id="@+id/chooseplant_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Plant name"
-        android:textSize="16dp"
+        android:text="@string/no_data"
+        android:textSize="20sp"
+        android:textColor="@color/not_quite_black"
+        android:shadowColor="@color/ligt_grey"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:shadowRadius="5"
         android:layout_marginLeft="17dp"
         android:layout_marginRight="17dp"/>
     <androidx.cardview.widget.CardView
@@ -58,18 +63,31 @@
                         android:id="@+id/chooseplant_probability"
                         android:text="97%"
                         android:textSize="28dp"
+                        android:textColor="@color/not_quite_black"
+                        android:shadowColor="@color/ligt_grey"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="5"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="26dp"/>
-                    <Button
+                    <android.widget.Button
                         android:id="@+id/chooseplant_button"
                         android:focusable="false"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_below="@id/chooseplant_probability"
-                        android:text="Add plant" />
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:text="@string/add_plant"
+                        android:textColor="#FFFFFF"
+                        android:background="@drawable/shape_water_button"
+                        android:shadowColor="#454545"
+                        android:shadowDx="0"
+                        android:shadowDy="0"
+                        android:shadowRadius="5"/>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>

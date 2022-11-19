@@ -1,6 +1,7 @@
 package com.example.waterplants
 
 import android.content.Intent
+import android.database.sqlite.SQLiteException
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -120,10 +121,15 @@ class ChoosePlantDetailsActivity : AppCompatActivity() {
                 taxonomyCardView.visibility = View.GONE
             }
             button.setOnClickListener {
-                dbHelper.addPlantToDB(db, chosenPlant!!)
-                saveInfoToast.show()
-                startActivity(Intent(applicationContext, MyPlantsActivity::class.java))
-                finish()
+                try {
+                    dbHelper.addPlantToDB(db, chosenPlant!!)
+                    saveInfoToast.show()
+                    startActivity(Intent(applicationContext, MyPlantsActivity::class.java))
+                    finish()
+                } catch (e : SQLiteException) {
+                    errorToastInfo.show()
+                    throw e
+                }
             }
         }
     }
@@ -131,12 +137,14 @@ class ChoosePlantDetailsActivity : AppCompatActivity() {
 
 fun nullableListStringIntoString (list : List<String>?) : String {
     var text = ""
-    list?.let {
-        for (i in it.indices) {
-            if (i == 0) {
-                text += it.get(index = i)
-            } else {
-                text += "\n" + it.get(index = i)
+    if (list != null) {
+        list?.let {
+            for (i in it.indices) {
+                if (i == 0) {
+                    text += it.get(index = i)
+                } else {
+                    text += "\n" + it.get(index = i)
+                }
             }
         }
     }

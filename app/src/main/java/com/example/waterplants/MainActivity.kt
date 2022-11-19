@@ -2,8 +2,6 @@ package com.example.waterplants
 
 import android.app.Activity
 import android.content.Intent
-import android.database.CursorWindow
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -19,11 +17,11 @@ import com.example.waterplants.api.createPlantAPIClient
 import com.example.waterplants.api.model.ResponseIdentify
 import com.example.waterplants.api.model.Suggestion
 import com.example.waterplants.api.request.IdentifyRequest
+import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityMainBinding
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.io.File
-import java.lang.reflect.Field
 
 // Photo related variables
 lateinit var photoFile: File
@@ -37,11 +35,10 @@ public var identifiedPlantArrayList : ArrayList<IdentifiedPlant> = ArrayList()
 public var  responseIdentify : ArrayList<ResponseIdentify> = ArrayList()
 var plantsToWater : ArrayList<Plant> = ArrayList()
 
-class MainActivity : AppCompatActivity()
-{
+class MainActivity : AppCompatActivity() {
     // Main menu contents
-    val menuImageId = intArrayOf(R.drawable.plants, R.drawable.watering)
-    val menuItemName = listOf("My plants", "Watering")
+    val menuImageId = intArrayOf(R.drawable.plants, R.drawable.watering, R.drawable.fertilizing)
+    val menuItemName = listOf("My plants", "Watering", "Fertilizing")
     private lateinit var menuItemArrayList : ArrayList<MenuItem>
     // Binding
     private lateinit var binding : ActivityMainBinding
@@ -49,41 +46,23 @@ class MainActivity : AppCompatActivity()
     val plantDetails : MutableList<String> = mutableListOf("common_names", "edible_parts", "propagation_methods", "scientific_name", "structured_name", "synonyms", "taxonomy", "url", "watering", "wiki_description", "wiki_image")
     val plantapi : PlantAPI by lazy { createPlantAPIClient() }
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Creating database
-//        val dbHelper = DataBaseHelper(applicationContext)
-//        val db = dbHelper.writableDatabase
+        // Setting up database
+        val dbHelper = DataBaseHelper(applicationContext)
+        val db = dbHelper.writableDatabase
+        dbHelper.setCursorSize()
 
-        try {
-            val field : Field = CursorWindow::class.java.getDeclaredField("sCursorWindowSize")
-            field.isAccessible = true
-            field.set(null, 100 * 1024 * 1024)
-        } catch (e: java.lang.Exception)
-        {
-            println("Essa")
-        }
-
-//        val plantsToWater = dbHelper.selectPlantsToWater(db)
-//        Log.d("dupa", "$plantsToWater")
-//        for (i in plantsToWater.indices) {
-//            Log.d("dateWatered", "${plantsToWater[i].dateWatered.toString()}")
-//            Log.d("daysWatering", "${plantsToWater[i].daysWatering}")
-//        }
-//        Toast.makeText(applicationContext,"${plantsToWater.get(index = 0).name}", Toast.LENGTH_SHORT).show()
-        menuItemArrayList = ArrayList()
-
-        // TODO CZYSZCZENIE ZMIENNEJ GLOBALNEJ
+        // Clearing possible previous api responses
         responseIdentify.clear()
         identifiedPlantArrayList.clear()
 
-        // Feeding the main list view with content
+        // Setting up main menu contents
+        menuItemArrayList = ArrayList()
         for(i in menuItemName.indices) {
             val singleMenuItem = MenuItem(menuItemName[i], menuImageId[i])
             menuItemArrayList.add(singleMenuItem)
@@ -91,10 +70,10 @@ class MainActivity : AppCompatActivity()
         binding.listViewMain.isClickable = true
         binding.listViewMain.adapter = MenuAdapter(this, menuItemArrayList)
         binding.listViewMain.setOnItemClickListener{_, _, position, _ ->
-            when(position)
-            {
+            when(position) {
                 0 -> startActivity(Intent(applicationContext, MyPlantsActivity::class.java))
                 1 -> startActivity(Intent(applicationContext, WateringActivity::class.java))
+                2 -> startActivity(Intent(applicationContext, FertilizingActivity::class.java))
             }
         }
 
@@ -102,19 +81,15 @@ class MainActivity : AppCompatActivity()
         binding.buttonCamera.isClickable = true
         binding.buttonCamera.setOnClickListener{
             takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
             // Getting the photo file and photo URI
             photoFile = getPhotoFile(FILE_NAME)
             fileProvider = FileProvider.getUriForFile(this, "com.example.fileprovider", photoFile)
 
-
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, fileProvider)
-            if (takePictureIntent.resolveActivity(this.packageManager) != null)
-            {
+            if (takePictureIntent.resolveActivity(this.packageManager) != null) {
                 startActivityForResult(takePictureIntent, REQUEST_CODE)
             }
-            else
-            {
+            else {
                 Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
             }
         }
@@ -133,27 +108,31 @@ class MainActivity : AppCompatActivity()
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // Activity of taking a picture
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK)
-        {
-            val image = BitmapFactory.decodeFile(photoFile.absolutePath)
-            binding.pictureTest.setImageBitmap(image)
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+//            val image = BitmapFactory.decodeFile(photoFile.absolutePath)
+//            binding.pictureTest.setImageBitmap(image)
             Toast.makeText(this@MainActivity, "Processing identification...", Toast.LENGTH_SHORT).show()
             // Sending image to API, assigning results to global ArrayList of identified plants and starting ChoosePlantActivity
             lifecycleScope.launch {
                 var res = sendImageToAPI(encodeImageBase64(photoFile)).await()
                 responseIdentify.add(res)
-                for (i in res.suggestions.indices)
-                {
-                    var singleSuggestion : Suggestion = res.suggestions.get(index = i)
-                    var identifiedPlant = IdentifiedPlant(singleSuggestion.id, singleSuggestion.plant_details, singleSuggestion.plant_name, singleSuggestion.probability)
-                    identifiedPlantArrayList.add(identifiedPlant)
+                if (res.is_plant) {
+                    for (i in res.suggestions.indices) {
+                        var singleSuggestion: Suggestion = res.suggestions.get(index = i)
+                        var identifiedPlant = IdentifiedPlant(
+                            singleSuggestion.id,
+                            singleSuggestion.plant_details,
+                            singleSuggestion.plant_name,
+                            singleSuggestion.probability
+                        )
+                        identifiedPlantArrayList.add(identifiedPlant)
+                    }
                 }
                 startActivity(Intent(applicationContext, ChoosePlantActivity::class.java))
             }
         }
         // Every other activity
-        else
-        {
+        else {
             super.onActivityResult(requestCode, resultCode, data)
         }
     }

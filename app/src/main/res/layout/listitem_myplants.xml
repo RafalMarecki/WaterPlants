@@ -26,15 +26,20 @@
                 android:layout_height="match_parent"
                 android:src="@drawable/plants"
                 android:background="@color/white"
-                android:scaleType="centerCrop"/>
+                android:scaleType="centerCrop" />
         </androidx.cardview.widget.CardView>
         <TextView
             android:id="@+id/plant_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="Plant name"
+            android:text="@string/no_data"
+            android:textColor="@color/not_quite_black"
             android:textSize="20sp"
+            android:shadowColor="@color/ligt_grey"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="10"
             android:layout_toRightOf="@id/plant_image_cardview"
             android:layout_alignBottom="@id/plant_image_cardview"
             android:layout_alignTop="@id/plant_image_cardview"/>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="180dp">
     <TextView
-        android:id="@+id/watering_name"
+        android:id="@+id/fertilizing_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/no_data"
@@ -19,7 +19,7 @@
         android:layout_marginLeft="17dp"
         android:layout_marginRight="17dp"/>
     <androidx.cardview.widget.CardView
-        android:id="@+id/watering_cardview"
+        android:id="@+id/fertilizing_cardview"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="150dp"
@@ -27,11 +27,11 @@
         android:layout_margin="5dp"
         android:elevation="10dp">
         <RelativeLayout
-            android:id="@+id/watering_relativelayout"
+            android:id="@+id/fertilizing_relativelayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <androidx.cardview.widget.CardView
-                android:id="@+id/watering_image_cardview"
+                android:id="@+id/fertilizing_image_cardview"
                 android:orientation="vertical"
                 android:layout_width="240dp"
                 android:layout_height="match_parent"
@@ -39,7 +39,7 @@
                 android:layout_margin="5dp"
                 android:elevation="10dp">
                 <ImageView
-                    android:id="@+id/watering_image"
+                    android:id="@+id/fertilizing_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/plants"
@@ -47,7 +47,7 @@
                     android:scaleType="centerCrop"/>
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
-                android:id="@+id/watering_rigt_pannel_cardview"
+                android:id="@+id/fertilizing_rigt_pannel_cardview"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -55,22 +55,22 @@
                 android:layout_margin="5dp"
                 android:elevation="10dp"
                 android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/watering_image_cardview">
-                    <android.widget.Button
-                        android:id="@+id/watering_button"
-                        android:focusable="false"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:layout_gravity="center"
-                        android:layout_margin="10dp"
-                        android:textColor="#FFFFFF"
-                        android:text="@string/water"
-                        android:background="@drawable/shape_water_button"
-                        android:shadowColor="#454545"
-                        android:shadowDx="0"
-                        android:shadowDy="0"
-                        android:shadowRadius="5"/>
+                android:layout_toRightOf="@id/fertilizing_image_cardview">
+                <android.widget.Button
+                    android:id="@+id/fertilizing_button"
+                    android:focusable="false"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_margin="10dp"
+                    android:textColor="#FFFFFF"
+                    android:text="@string/fertilize"
+                    android:background="@drawable/shape_water_button"
+                    android:shadowColor="#454545"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

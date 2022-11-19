@@ -108,14 +108,20 @@
                     android:textSize="28sp"
                     android:layout_toRightOf="@id/chooseplantdetails_probability"
                     android:layout_toLeftOf="@id/chooseplantdetails_addplant_button"/>
-                <Button
+                <android.widget.Button
                     android:id="@+id/chooseplantdetails_addplant_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginEnd="15dp"
-                    android:text="@string/add_plant"/>
+                    android:text="@string/add_plant"
+                    android:textColor="#FFFFFF"
+                    android:background="@drawable/shape_water_button"
+                    android:shadowColor="#454545"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
         <!--DESCROPTION-->

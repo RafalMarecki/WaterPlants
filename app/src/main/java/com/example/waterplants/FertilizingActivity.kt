@@ -5,23 +5,23 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.waterplants.database.CommandSQL
 import com.example.waterplants.database.DataBaseHelper
-import com.example.waterplants.databinding.ActivityWateringBinding
+import com.example.waterplants.databinding.ActivityFertilizingBinding
 
-class WateringActivity : AppCompatActivity() {
-    lateinit var binding: ActivityWateringBinding
+class FertilizingActivity : AppCompatActivity() {
+    lateinit var binding : ActivityFertilizingBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityWateringBinding.inflate(layoutInflater)
+        binding = ActivityFertilizingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Creating database
-        val dbHelper = DataBaseHelper(this@WateringActivity)
+        val dbHelper = DataBaseHelper(this@FertilizingActivity)
         val db = dbHelper.writableDatabase
 
-        val plantsToWater = dbHelper.selectPlantsToWaterOrFertilize(db, CommandSQL.SELECT_PLANTS_TO_WATER)
-        if (plantsToWater.size != 0) {
-            binding.wateringListview.adapter = WateringAdapter(this, plantsToWater)
-            binding.wateringListview.isClickable = false
+        val plantsToFertilize = dbHelper.selectPlantsToWaterOrFertilize(db, CommandSQL.SELECT_PLANTS_TO_FERTILIZE)
+        if (plantsToFertilize.size != 0) {
+            binding.fertilizingListview.adapter = FertilizingAdapter(this, plantsToFertilize)
+            binding.fertilizingListview.isClickable = false
         } else {
             noResultsActivityStart()
         }
@@ -29,7 +29,7 @@ class WateringActivity : AppCompatActivity() {
 
     fun noResultsActivityStart () {
         setContentView(R.layout.activity_noresults)
-        val noPlantsText = "No plants to water today"
+        val noPlantsText = "No plants to fertilize today"
         val noResultsTextView : TextView = findViewById(R.id.noresults_textview)
         noResultsTextView.text = noPlantsText
     }

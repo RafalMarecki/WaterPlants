@@ -4,9 +4,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.widget.Toast
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityChooseplantBinding
 import java.io.ByteArrayOutputStream
 
@@ -15,41 +14,44 @@ var chosenPlant : IdentifiedPlant? = null
 
 class ChoosePlantActivity : AppCompatActivity() {
     private lateinit var binding : ActivityChooseplantBinding
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityChooseplantBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // DATABASE
-        val dbHelper = DataBaseHelper(applicationContext)
-        val db = dbHelper.writableDatabase
-        val saveInfoToast = Toast.makeText(applicationContext, "Plant saved", Toast.LENGTH_SHORT)
-        val errorToastInfo = Toast.makeText(applicationContext, "Null exception while saving", Toast.LENGTH_SHORT)
-
         // TODO CZYSZCZENIE ZMIENNEJ GLOBALNEJ
         chosenPlant = null
 
-//        val button = findViewById(R.id.chooseplant_button) as Button
-//        button.setOnClickListener {
-//            val name = chooseplant_name.text.toString()
-//            val ind = identifiedPlantArrayList.indices.find { identifiedPlantArrayList[it].plant_name == name}
-//            if (ind != null) {
-//                dbHelper.addPlantToDB(db, identifiedPlantArrayList.get(index = ind))
-//                saveInfoToast.show()
-//            } else {
-//                errorToastInfo.show()
-//            }
-//
-//        }
-
-        binding.listViewChooseplant.isClickable = true
-        binding.listViewChooseplant.adapter = ChoosePlantAdapter(this, identifiedPlantArrayList)
-        binding.listViewChooseplant.setOnItemClickListener {_, _, position, _ ->
-            chosenPlant = identifiedPlantArrayList.get(index = position)
-            startActivity(Intent(this@ChoosePlantActivity, ChoosePlantDetailsActivity::class.java))
+        if (identifiedPlantArrayList.size != 0) {
+            binding.listViewChooseplant.isClickable = true
+            binding.listViewChooseplant.adapter = ChoosePlantAdapter(this, identifiedPlantArrayList)
+            binding.listViewChooseplant.setOnItemClickListener { _, _, position, _ ->
+                chosenPlant = identifiedPlantArrayList.get(index = position)
+                startActivity(
+                    Intent(
+                        this@ChoosePlantActivity,
+                        ChoosePlantDetailsActivity::class.java
+                    )
+                )
+            }
         }
+        else {
+            noResultsActivityStart()
+        }
+    }
+
+    fun noResultsActivityStart () {
+        setContentView(R.layout.activity_noresults)
+        val noPlantsText = "No plants identified"
+        val noResultsTextView : TextView = findViewById(R.id.noresults_textview)
+        noResultsTextView.text = noPlantsText
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        this.finish()
+        responseIdentify.clear()
+        identifiedPlantArrayList.clear()
     }
 }
  fun convertBitmapToByteArray (bitmap : Bitmap) : ByteArray {
@@ -83,3 +85,5 @@ fun returnPlantDaysWatering (identifiedPlant: IdentifiedPlant) : Int {
     }
     return 7 // Default value
 }
+
+
