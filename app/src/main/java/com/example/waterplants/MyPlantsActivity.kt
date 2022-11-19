@@ -63,4 +63,10 @@ class MyPlantsActivity : AppCompatActivity() {
         noResultsTextView.text = noPlantsText
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = Intent(this@MyPlantsActivity, MainActivity::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+    }
 }

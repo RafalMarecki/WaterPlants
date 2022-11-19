@@ -44,7 +44,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginRight="5dp"
                     android:text="@string/common_name"
                     android:textSize="16sp" />
                 <TextView
@@ -62,7 +61,6 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@id/common_name"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp"
                     android:textSize="16sp"
                     android:text="@string/scientific_name"/>
                 <TextView
@@ -73,8 +71,7 @@
                     android:layout_alignBaseline="@id/latin_name_static"
                     android:layout_marginRight="15dp"
                     android:textSize="16sp"
-                    android:text="@string/no_data"
-                    />
+                    android:text="@string/no_data" />
                 <TextView
                     android:id="@+id/date_static"
                     android:layout_width="wrap_content"
@@ -82,7 +79,6 @@
                     android:layout_below="@id/latin_name"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5dp"
                     android:textSize="16sp"
                     android:text="@string/added_date"/>
                 <TextView
@@ -93,8 +89,7 @@
                     android:layout_alignBaseline="@id/date_static"
                     android:layout_marginRight="15dp"
                     android:textSize="16sp"
-                    android:text="@string/no_data"
-                    />
+                    android:text="@string/no_data" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
         <!--WATERING-->
@@ -219,7 +214,8 @@
                     android:layout_marginBottom="2dp"
                     android:layout_below="@id/plantdetails_description"
                     android:text="@string/no_data"
-                    android:textSize="10sp"/>
+                    android:textSize="10sp"
+                    android:autoLink="web"/>
                 <TextView
                     android:id="@+id/plantdetails_license_name"
                     android:layout_width="wrap_content"

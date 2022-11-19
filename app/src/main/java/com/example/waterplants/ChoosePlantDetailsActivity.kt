@@ -26,6 +26,7 @@ class ChoosePlantDetailsActivity : AppCompatActivity() {
         val dbHelper = DataBaseHelper(applicationContext)
         val db = dbHelper.writableDatabase
         val saveInfoToast = Toast.makeText(applicationContext, "Plant saved", Toast.LENGTH_SHORT)
+        val saveInfoToast2 = Toast.makeText(applicationContext, "Saving plant...", Toast.LENGTH_SHORT)
         val errorToastInfo = Toast.makeText(applicationContext, "Null exception while saving", Toast.LENGTH_SHORT)
 
         val picture : ImageView = binding.chooseplantdetailsPicture
@@ -52,6 +53,7 @@ class ChoosePlantDetailsActivity : AppCompatActivity() {
         val taxonomyKingdom : TextView = binding.chooseplantdetailsTaxonomyKingdom
         val taxonomyPhylum : TextView = binding.chooseplantdetailsTaxonomyPhylum
         val button : Button = binding.chooseplantdetailsAddplantButton
+        val pictureLicense : TextView = binding.chooseplantdetailsPictureLicense
 
         if (chosenPlant != null) {
             val plantDetails : PlantDetails? = chosenPlant?.plant_details
@@ -63,6 +65,14 @@ class ChoosePlantDetailsActivity : AppCompatActivity() {
                     .into(picture)
             } else {
                 picture.setImageResource(R.drawable.noimage)
+            }
+            // Picture license
+            if (plantDetails?.wiki_image?.citation != null || plantDetails?.wiki_image?.license_name != null || plantDetails?.wiki_image?.license_url != null) {
+                pictureLicense.visibility = View.VISIBLE
+                val licenseConcatenated = plantDetails?.wiki_image?.license_name + ", " +  plantDetails?.wiki_image?.citation + ", " + plantDetails?.wiki_image?.license_url
+                pictureLicense.text = licenseConcatenated
+            } else {
+                pictureLicense.visibility = View.GONE
             }
             // Plant details
             commonName.text = chosenPlant?.plant_name
@@ -120,11 +130,17 @@ class ChoosePlantDetailsActivity : AppCompatActivity() {
             } else {
                 taxonomyCardView.visibility = View.GONE
             }
+            // Adding plant to database
             button.setOnClickListener {
                 try {
+                    saveInfoToast2.show()
                     dbHelper.addPlantToDB(db, chosenPlant!!)
                     saveInfoToast.show()
-                    startActivity(Intent(applicationContext, MyPlantsActivity::class.java))
+                    chosenPlant = null
+                    identifiedPlantArrayList.clear()
+                    var intent = Intent(applicationContext, MyPlantsActivity::class.java)
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
                     finish()
                 } catch (e : SQLiteException) {
                     errorToastInfo.show()

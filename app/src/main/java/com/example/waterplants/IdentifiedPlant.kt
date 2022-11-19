@@ -6,5 +6,3 @@ class IdentifiedPlant(var id: Int,
                       var plant_details: PlantDetails,
                       var plant_name: String,
                       var probability: Double)
-{
-}

@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">WaterPlants</string>
     <string name="no_data">No data found</string>
-    <string name="common_name">Common name:</string>
-    <string name="scientific_name">Scientific name:</string>
+    <string name="common_name">Common name:\u0020</string>
+    <string name="scientific_name">Scientific name:\u0020</string>
     <string name="unknown_probability">-%\u0020</string>
-    <string name="probability">Probability</string>
+    <string name="probability">\u0020 Probability</string>
     <string name="add_plant">Add plant</string>
     <string name="description">Description</string>
     <string name="synonyms">Synonyms</string>
@@ -21,7 +21,7 @@
     <string name="phylum">Phylum:\u0020</string>
     <string name="watering">Watering</string>
     <string name="fertilizing">Fertilizing</string>
-    <string name="added_date">Added date:</string>
+    <string name="added_date">Added date:\u0020</string>
     <string name="water">Water</string>
     <string name="fertilize">Fertilize</string>
     <string name="save">Save reminders</string>
