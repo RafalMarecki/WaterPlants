@@ -100,7 +100,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
     }
 
     fun addPlantToDB (db: SQLiteDatabase?, identifiedPlant: IdentifiedPlant) {
-        val image = BitmapFactory.decodeFile(photoFile.absolutePath)
+        val image = downscaleBitmap(BitmapFactory.decodeFile(photoFile.absolutePath), 1200)
         val image_bytes = convertBitmapToByteArray(image)
         val res = responseIdentify.get(index = 0)
         val values = ContentValues()
@@ -158,11 +158,11 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                         cursor.getInt(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_ID_API))
                     val plantName =
                         cursor.getString(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_PLANT_NAME))
-                    val picture = convertByteArrayToBitmap(
+                    val picture = downscaleBitmap( convertByteArrayToBitmap(
                         cursor.getBlob(
                             cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_PICTURE)
                         )
-                    )
+                    ), 1200)
                     val dateAdded =
                         cursor.getString(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_DATE_ADDED))
                     val dateWatered = cursor.getString(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_DATE_WATERED))
