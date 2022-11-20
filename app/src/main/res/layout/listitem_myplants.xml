@@ -42,7 +42,8 @@
             android:shadowRadius="10"
             android:layout_toRightOf="@id/plant_image_cardview"
             android:layout_alignBottom="@id/plant_image_cardview"
-            android:layout_alignTop="@id/plant_image_cardview"/>
+            android:layout_alignTop="@id/plant_image_cardview"
+            android:textStyle="italic"/>
 
 
     </RelativeLayout>

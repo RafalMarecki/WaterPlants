@@ -60,7 +60,12 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
                     android:text="@string/common_name"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_common_name"
                     android:layout_width="wrap_content"
@@ -70,7 +75,7 @@
                     android:layout_marginRight="15dp"
                     android:textSize="16sp"
                     android:text="@string/no_data"
-                    />
+                    android:textStyle="italic"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_scientificname_static"
                     android:layout_width="wrap_content"
@@ -79,7 +84,12 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginBottom="15dp"
                     android:textSize="16sp"
-                    android:text="@string/scientific_name"/>
+                    android:text="@string/scientific_name"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_scientificname"
                     android:layout_width="wrap_content"
@@ -88,7 +98,8 @@
                     android:layout_alignBaseline="@id/chooseplantdetails_scientificname_static"
                     android:layout_marginRight="15dp"
                     android:textSize="16sp"
-                    android:text="@string/no_data" />
+                    android:text="@string/no_data"
+                    android:textStyle="italic"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
         <!--ADD PLANT-->
@@ -111,7 +122,13 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:text="@string/unknown_probability"
-                    android:textSize="28sp"/>
+                    android:textSize="28sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"
+                    />
                 <TextView
                     android:id="@+id/chooseplantdetails_probability_static"
                     android:layout_width="wrap_content"
@@ -120,7 +137,12 @@
                     android:text="@string/probability"
                     android:textSize="28sp"
                     android:layout_toRightOf="@id/chooseplantdetails_probability"
-                    android:layout_toLeftOf="@id/chooseplantdetails_addplant_button"/>
+                    android:layout_toLeftOf="@id/chooseplantdetails_addplant_button"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <android.widget.Button
                     android:id="@+id/chooseplantdetails_addplant_button"
                     android:layout_width="150dp"
@@ -157,7 +179,12 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
                     android:text="@string/description"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_description"
                     android:layout_width="wrap_content"
@@ -210,7 +237,12 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
                     android:text="@string/synonyms"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_synonyms"
                     android:layout_width="wrap_content"
@@ -220,7 +252,8 @@
                     android:layout_marginBottom="10dp"
                     android:layout_below="@id/chooseplantdetails_synonyms_static"
                     android:text="@string/no_data"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="italic"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
         <androidx.cardview.widget.CardView
@@ -242,7 +275,12 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
                     android:text="@string/propagation_methods"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_propagationmethods"
                     android:layout_width="wrap_content"
@@ -275,7 +313,12 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
                     android:text="@string/edible_parts"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_edibleparts"
                     android:layout_width="wrap_content"
@@ -308,7 +351,12 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
                     android:text="@string/structured_name"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_structuredname_genus_static"
                     android:layout_width="wrap_content"
@@ -317,7 +365,12 @@
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_structuredname_static"
                     android:text="@string/genus"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_structuredname_genus"
                     android:layout_width="wrap_content"
@@ -326,7 +379,8 @@
                     android:layout_toRightOf="@id/chooseplantdetails_structuredname_genus_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_structuredname_genus_static"
                     android:text="@string/no_data"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="italic"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_structuredname_species_static"
                     android:layout_width="wrap_content"
@@ -335,7 +389,12 @@
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_structuredname_genus"
                     android:text="@string/species"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_structuredname_species"
                     android:layout_width="wrap_content"
@@ -344,7 +403,8 @@
                     android:layout_toRightOf="@id/chooseplantdetails_structuredname_species_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_structuredname_species_static"
                     android:text="@string/no_data"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="italic"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
         <!--TAXONOMY-->
@@ -367,7 +427,12 @@
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
                     android:text="@string/taxonomy"
-                    android:textSize="20sp"/>
+                    android:textSize="20sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_class_static"
                     android:layout_width="wrap_content"
@@ -376,7 +441,12 @@
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_static"
                     android:text="@string/cla"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_class"
                     android:layout_width="wrap_content"
@@ -385,7 +455,8 @@
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_class_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_class_static"
                     android:text="@string/no_data"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="italic"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_family_static"
                     android:layout_width="wrap_content"
@@ -394,7 +465,12 @@
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_class"
                     android:text="@string/family"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_family"
                     android:layout_width="wrap_content"
@@ -403,7 +479,8 @@
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_family_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_family_static"
                     android:text="@string/no_data"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="italic"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_genus_static"
                     android:layout_width="wrap_content"
@@ -412,7 +489,12 @@
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_family"
                     android:text="@string/genus"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_genus"
                     android:layout_width="wrap_content"
@@ -421,7 +503,8 @@
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_genus_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_genus_static"
                     android:text="@string/no_data"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="italic"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_kingdom_static"
                     android:layout_width="wrap_content"
@@ -430,7 +513,12 @@
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_genus"
                     android:text="@string/kingdom"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_kingdom"
                     android:layout_width="wrap_content"
@@ -439,7 +527,8 @@
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_kingdom_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_kingdom_static"
                     android:text="@string/no_data"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="italic"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_order_static"
                     android:layout_width="wrap_content"
@@ -448,7 +537,12 @@
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_kingdom"
                     android:text="@string/order"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_order"
                     android:layout_width="wrap_content"
@@ -457,7 +551,8 @@
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_order_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_order_static"
                     android:text="@string/no_data"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="italic"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_phylum_static"
                     android:layout_width="wrap_content"
@@ -466,7 +561,12 @@
                     android:layout_marginBottom="5dp"
                     android:layout_below="@id/chooseplantdetails_taxonomy_order"
                     android:text="@string/phylum"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textColor="@color/not_quite_black"
+                    android:shadowColor="@color/ligt_grey"
+                    android:shadowDx="0"
+                    android:shadowDy="0"
+                    android:shadowRadius="5"/>
                 <TextView
                     android:id="@+id/chooseplantdetails_taxonomy_phylum"
                     android:layout_width="wrap_content"
@@ -475,7 +575,8 @@
                     android:layout_toRightOf="@id/chooseplantdetails_taxonomy_phylum_static"
                     android:layout_alignBaseline="@id/chooseplantdetails_taxonomy_phylum_static"
                     android:text="@string/no_data"
-                    android:textSize="16sp"/>
+                    android:textSize="16sp"
+                    android:textStyle="italic" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </RelativeLayout>

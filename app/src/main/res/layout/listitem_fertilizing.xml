@@ -17,7 +17,8 @@
         android:shadowDy="0"
         android:shadowRadius="5"
         android:layout_marginLeft="17dp"
-        android:layout_marginRight="17dp"/>
+        android:layout_marginRight="17dp"
+        android:textStyle="italic"/>
     <androidx.cardview.widget.CardView
         android:id="@+id/fertilizing_cardview"
         android:orientation="vertical"
