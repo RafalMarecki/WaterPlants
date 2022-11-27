@@ -21,7 +21,7 @@
                 android:id="@+id/plantdetails_picture"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/plants"
+                android:src="@drawable/plants2"
                 android:background="@color/white"
                 android:scaleType="centerCrop"
                 />
@@ -83,7 +83,7 @@
                     android:layout_marginRight="15dp"
                     android:textSize="16sp"
                     android:text="@string/no_data"
-                    />
+                    android:textStyle="italic"/>
                 <TextView
                     android:id="@+id/date_static"
                     android:layout_width="wrap_content"
