@@ -1,16 +1,8 @@
 package com.example.waterplants
 
 import android.graphics.Bitmap
-import android.os.Parcelable
-import kotlinx.android.parcel.Parcelize
 import java.time.LocalDate
 
-//import android.os.Parcel
-//import android.os.Parcelable
-
-//class Plant (var name: String, var imageId: Int ) /*: Parcelable*/ {
-//}
-@Parcelize
 class Plant (var id : Int,
              var idApi : Int,
              var name : String,
@@ -36,15 +28,5 @@ class Plant (var id : Int,
              val descriptionValue : String?,
              val descriptionLicense : String?,
              val descriptionCitation : String?
-) : Parcelable
-{
-//    constructor (parcel: Parcel
-//
-//    override fun describeContents(): Int {
-//        TODO("Not yet implemented")
-//    }
-//
-//    override fun writeToParcel(dest: Parcel?, flags: Int) {
-//        TODO("Not yet implemented")
-//    }
-}
+)
+

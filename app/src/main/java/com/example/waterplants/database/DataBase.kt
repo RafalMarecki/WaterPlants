@@ -76,7 +76,7 @@ object CommandSQL {
     const val SELECT = "SELECT * FROM ${MyPlantsTable.TABLE_NAME}"
     const val SELECT_PLANTS_TO_WATER = "SELECT * FROM ${MyPlantsTable.TABLE_NAME} WHERE ${MyPlantsTable.TABLE_COLUMN_DATE_WATERED}<=DATE(?, '-' || ${MyPlantsTable.TABLE_COLUMN_DAYS_WATERING} || ' days')"
     const val SELECT_PLANTS_TO_FERTILIZE = "SELECT * FROM ${MyPlantsTable.TABLE_NAME} WHERE ${MyPlantsTable.TABLE_COLUMN_DATE_FERTILIZED}<=DATE(?, '-' || ${MyPlantsTable.TABLE_COLUMN_DAYS_FERTILIZING} || ' days')"
-    const val SELECT_PLANTS_WHERE_ID_API = "SELECT * FROM ${MyPlantsTable.TABLE_NAME} WHERE ${MyPlantsTable.TABLE_COLUMN_ID_API}=?"
+    const val SELECT_PLANTS_WHERE_ID = "SELECT * FROM ${MyPlantsTable.TABLE_NAME} WHERE ${BaseColumns._ID}=?"
 }
 
 class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable.TABLE_NAME, null, 1){
@@ -141,7 +141,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
     }
 
     fun deletePlant (db: SQLiteDatabase, plant : Plant) {
-        val whereClause = "${MyPlantsTable.TABLE_COLUMN_ID_API}=?"
+        val whereClause = "${BaseColumns._ID}=?"
         db.delete(MyPlantsTable.TABLE_NAME, whereClause, arrayOf(plant.idApi.toString()))
     }
 
@@ -245,9 +245,9 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
         return plantList
     }
 
-    fun selectPlantByIdAPI(db: SQLiteDatabase, idAPI : Int) : Plant? {
+    fun selectPlantById(db: SQLiteDatabase, id : Int) : Plant? {
         try {
-            val cursor = db.rawQuery(CommandSQL.SELECT_PLANTS_WHERE_ID_API, arrayOf(idAPI.toString()))
+            val cursor = db.rawQuery(CommandSQL.SELECT_PLANTS_WHERE_ID, arrayOf(id.toString()))
             Log.d("Cursor", "$cursor")
             cursor.moveToFirst()
 
@@ -441,7 +441,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
 
     fun updateWatering (db: SQLiteDatabase, plant : Plant) {
         val date = LocalDate.now(ZoneId.systemDefault()).toString()
-        val id = plant.idApi.toString()
+        val id = plant.id.toString()
 
         val values = ContentValues()
         values.put(MyPlantsTable.TABLE_COLUMN_DATE_WATERED, date)
@@ -449,7 +449,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
             val result = db.update(
                 MyPlantsTable.TABLE_NAME,
                 values,
-                "${MyPlantsTable.TABLE_COLUMN_ID_API}=?",
+                "${BaseColumns._ID}=?",
                 arrayOf(id))
             Log.d("RESULT", "$result")
         } catch (e : SQLiteException) {
@@ -461,7 +461,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
 
     fun updateFertilizing (db: SQLiteDatabase, plant : Plant) {
         val date = LocalDate.now(ZoneId.systemDefault()).toString()
-        val id = plant.idApi.toString()
+        val id = plant.id.toString()
 
         val values = ContentValues()
         values.put(MyPlantsTable.TABLE_COLUMN_DATE_FERTILIZED, date)
@@ -469,7 +469,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
             val result = db.update(
                 MyPlantsTable.TABLE_NAME,
                 values,
-                "${MyPlantsTable.TABLE_COLUMN_ID_API}=?",
+                "${BaseColumns._ID}=?",
                 arrayOf(id))
             Log.d("RESULT", "$result")
         } catch (e : SQLiteException) {
@@ -500,7 +500,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
             val result = db.update(
                 MyPlantsTable.TABLE_NAME,
                 values,
-                "${MyPlantsTable.TABLE_COLUMN_ID_API}=?",
+                "${BaseColumns._ID}=?",
                 arrayOf(idAPI.toString()))
             Log.d("RESULT", "$result")
         } catch (e : SQLiteException) {

@@ -19,7 +19,6 @@ class ChoosePlantActivity : AppCompatActivity() {
         binding = ActivityChooseplantBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // TODO CZYSZCZENIE ZMIENNEJ GLOBALNEJ
         chosenPlant = null
 
         if (identifiedPlantArrayList.size != 0) {

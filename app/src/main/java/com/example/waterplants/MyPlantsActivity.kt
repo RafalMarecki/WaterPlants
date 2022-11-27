@@ -25,7 +25,7 @@ class MyPlantsActivity : AppCompatActivity() {
             binding.listViewPlants.adapter = PlantAdapter(this, myPlantList)
             binding.listViewPlants.setOnItemClickListener { _, _, position, _ ->
                 val intent = Intent(this@MyPlantsActivity, PlantDetailsActivity::class.java)
-                plantChosen = dbHelper.selectPlantByIdAPI(db, myPlantList[position].idApi)
+                plantChosen = dbHelper.selectPlantById(db, myPlantList[position].id)
                 startActivity(intent)
             }
         } else {
@@ -48,7 +48,7 @@ class MyPlantsActivity : AppCompatActivity() {
             binding.listViewPlants.adapter = PlantAdapter(this, myPlantList)
             binding.listViewPlants.setOnItemClickListener { _, _, position, _ ->
                 val intent = Intent(this@MyPlantsActivity, PlantDetailsActivity::class.java)
-                plantChosen = dbHelper.selectPlantByIdAPI(db, myPlantList[position].idApi)
+                plantChosen = dbHelper.selectPlantById(db, myPlantList[position].id)
                 startActivity(intent)
             }
         } else {

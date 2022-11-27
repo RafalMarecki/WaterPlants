@@ -175,7 +175,7 @@ class PlantDetailsActivity : AppCompatActivity() {
                 try {
                     dbHelper.updateReminders(
                         db,
-                        plantChosen!!.idApi,
+                        plantChosen!!.id,
                         isMonthW,
                         numberW,
                         isMonthF,
