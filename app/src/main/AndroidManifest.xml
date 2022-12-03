@@ -39,13 +39,13 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity android:name=".MyPlantsActivity"></activity>
-        <activity android:name=".PlantDetailsActivity"></activity>
-        <activity android:name=".ChoosePlantActivity"></activity>
-        <activity android:name=".ChoosePlantDetailsActivity"></activity>
-        <activity android:name=".WateringActivity"></activity>
-        <activity android:name=".FertilizingActivity"></activity>
-        <activity android:name=".ActivityNoResults"></activity>
+        <activity android:name=".activities.MyPlantsActivity"></activity>
+        <activity android:name=".activities.PlantDetailsActivity"></activity>
+        <activity android:name=".activities.ChoosePlantActivity"></activity>
+        <activity android:name=".activities.ChoosePlantDetailsActivity"></activity>
+        <activity android:name=".activities.WateringActivity"></activity>
+        <activity android:name=".activities.FertilizingActivity"></activity>
+        <activity android:name=".activities.ActivityNoResults"></activity>
     </application>
 
 </manifest>

@@ -13,16 +13,25 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
+import com.example.waterplants.activities.ChoosePlantActivity
+import com.example.waterplants.activities.FertilizingActivity
+import com.example.waterplants.activities.MyPlantsActivity
+import com.example.waterplants.activities.WateringActivity
+import com.example.waterplants.adapters.MenuAdapter
 import com.example.waterplants.api.PlantAPI
 import com.example.waterplants.api.createPlantAPIClient
 import com.example.waterplants.api.model.ResponseIdentify
 import com.example.waterplants.api.model.Suggestion
 import com.example.waterplants.api.request.IdentifyRequest
+import com.example.waterplants.classes.IdentifiedPlant
+import com.example.waterplants.classes.MenuItem
 import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityMainBinding
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.io.File
+
+const val PLANT_PROBABILITY_ACCEPTED = 0.65
 
 // Photo related variables
 lateinit var photoFile: File
@@ -32,9 +41,8 @@ private lateinit var fileProvider: Uri
 private const val REQUEST_CODE = 200
 
 // GLOBAL VARIABLE RESULT OF API
-public var identifiedPlantArrayList : ArrayList<IdentifiedPlant> = ArrayList()
-public var  responseIdentify : ArrayList<ResponseIdentify> = ArrayList()
-var plantsToWater : ArrayList<Plant> = ArrayList()
+var identifiedPlantArrayList : ArrayList<IdentifiedPlant> = ArrayList()
+var  responseIdentify : ArrayList<ResponseIdentify> = ArrayList()
 
 class MainActivity : AppCompatActivity() {
     // Main menu contents
@@ -55,7 +63,6 @@ class MainActivity : AppCompatActivity() {
 
         // Setting up database
         val dbHelper = DataBaseHelper(applicationContext)
-        val db = dbHelper.writableDatabase
         dbHelper.setCursorSize()
 
         // Clearing possible previous api responses
@@ -110,17 +117,15 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         // Activity of taking a picture
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-//            val image = BitmapFactory.decodeFile(photoFile.absolutePath)
-//            binding.pictureTest.setImageBitmap(image)
             Toast.makeText(this@MainActivity, "Processing identification...", Toast.LENGTH_SHORT).show()
             // Sending image to API, assigning results to global ArrayList of identified plants and starting ChoosePlantActivity
             lifecycleScope.launch {
-                var res = sendImageToAPI(encodeImageBase64(photoFile)).await()
+                val res = sendImageToAPI(encodeImageBase64(photoFile)).await()
                 responseIdentify.add(res)
-                if (res.is_plant) {
+                if (res.is_plant && res.is_plant_probability >= PLANT_PROBABILITY_ACCEPTED) {
                     for (i in res.suggestions.indices) {
-                        var singleSuggestion: Suggestion = res.suggestions.get(index = i)
-                        var identifiedPlant = IdentifiedPlant(
+                        val singleSuggestion: Suggestion = res.suggestions.get(index = i)
+                        val identifiedPlant = IdentifiedPlant(
                             singleSuggestion.id,
                             singleSuggestion.plant_details,
                             singleSuggestion.plant_name,
@@ -147,29 +152,28 @@ class MainActivity : AppCompatActivity() {
         }
 }
 
-fun downscaleBitmap(source : Bitmap, maxLength : Int) : Bitmap {
+fun downscaleBitmap(image : Bitmap, maxLength : Int) : Bitmap {
     try {
-        if (source.height >= source.width) {
-            if (source.height <= maxLength) { // if image height already smaller than the required height
-                return source
+        if (image.height >= image.width) {
+            if (image.height <= maxLength) { // If image is alredy good enough size
+                return image
             }
 
-            val aspectRatio = source.width.toDouble() / source.height.toDouble()
+            val aspectRatio = image.width.toDouble() / image.height.toDouble()
             val targetWidth = (maxLength * aspectRatio).toInt()
-            val result = Bitmap.createScaledBitmap(source, targetWidth, maxLength, false)
-            return result
+            val image = Bitmap.createScaledBitmap(image, targetWidth, maxLength, false)
+            return image
         } else {
-            if (source.width <= maxLength) { // if image width already smaller than the required width
-                return source
+            if (image.width <= maxLength) {  // If image is alredy good enough size
+                return image
             }
 
-            val aspectRatio = source.height.toDouble() / source.width.toDouble()
+            val aspectRatio = image.height.toDouble() / image.width.toDouble()
             val targetHeight = (maxLength * aspectRatio).toInt()
-
-            val result = Bitmap.createScaledBitmap(source, maxLength, targetHeight, false)
-            return result
+            val image = Bitmap.createScaledBitmap(image, maxLength, targetHeight, false)
+            return image
         }
     } catch (e: Exception) {
-        return source
+        return image
     }
 }

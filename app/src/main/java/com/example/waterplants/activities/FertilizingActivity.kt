@@ -1,8 +1,10 @@
-package com.example.waterplants
+package com.example.waterplants.activities
 
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.waterplants.R
+import com.example.waterplants.adapters.FertilizingAdapter
 import com.example.waterplants.database.CommandSQL
 import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityFertilizingBinding

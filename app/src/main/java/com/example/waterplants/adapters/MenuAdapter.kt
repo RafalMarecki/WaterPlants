@@ -1,4 +1,4 @@
-package com.example.waterplants
+package com.example.waterplants.adapters
 
 import android.app.Activity
 import android.view.LayoutInflater
@@ -7,8 +7,11 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.waterplants.R
+import com.example.waterplants.classes.MenuItem
 
-class MenuAdapter (private val context : Activity, private val arrayList: ArrayList<MenuItem>) : ArrayAdapter<MenuItem>(context, R.layout.list_item_main, arrayList)
+class MenuAdapter (private val context : Activity, private val arrayList: ArrayList<MenuItem>) : ArrayAdapter<MenuItem>(context,
+    R.layout.list_item_main, arrayList)
 {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View
     {

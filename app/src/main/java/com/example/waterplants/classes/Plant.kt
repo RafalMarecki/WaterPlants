@@ -1,4 +1,4 @@
-package com.example.waterplants
+package com.example.waterplants.classes
 
 import android.graphics.Bitmap
 import java.time.LocalDate
@@ -21,7 +21,7 @@ class Plant (var id : Int,
              var synonyms : String?,
              var taxonomyClass : String?,
              var taxonomyFamily : String?,
-             var taxonomyGenus : String?,
+//             var taxonomyGenus : String?, // TODO : DELETED
              var taxonomyKingdom : String?,
              var taxonomyOrder : String?,
              var taxonomyPhylum : String?,

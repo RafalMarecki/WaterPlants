@@ -1,9 +1,13 @@
-package com.example.waterplants
+package com.example.waterplants.activities
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.waterplants.MainActivity
+import com.example.waterplants.R
+import com.example.waterplants.adapters.PlantAdapter
+import com.example.waterplants.classes.Plant
 import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityMyplantsBinding
 

@@ -10,37 +10,45 @@ import android.graphics.BitmapFactory
 import android.provider.BaseColumns
 import android.util.Log
 import androidx.core.database.getStringOrNull
-import com.example.waterplants.*
+import com.example.waterplants.activities.convertBitmapToByteArray
+import com.example.waterplants.activities.convertByteArrayToBitmap
+import com.example.waterplants.activities.nullableListStringIntoString
+import com.example.waterplants.activities.returnPlantDaysWatering
+import com.example.waterplants.classes.IdentifiedPlant
+import com.example.waterplants.classes.Plant
+import com.example.waterplants.downscaleBitmap
+import com.example.waterplants.photoFile
+import com.example.waterplants.responseIdentify
 import java.lang.reflect.Field
 import java.time.LocalDate
 import java.time.ZoneId
 
 object MyPlantsTable : BaseColumns{
-    const val TABLE_NAME = "MyPlants"
-    const val TABLE_COLUMN_ID_API = "IdAPI"
-    const val TABLE_COLUMN_PLANT_NAME = "PlantName"
-    const val TABLE_COLUMN_PICTURE = "PlantPicture"
-    const val TABLE_COLUMN_DATE_ADDED = "DateAdded"
-    const val TABLE_COLUMN_DATE_WATERED = "DateWatered"
-    const val TABLE_COLUMN_DAYS_WATERING = "DaysWatering"
-    const val TABLE_COLUMN_DATE_FERTILIZED = "DateFertilized"
-    const val TABLE_COLUMN_DAYS_FERTILIZING = "DaysFertilizing"
-    const val TABLE_COLUMN_SCIENTIFIC_NAME = "ScientificName"
-    const val TABLE_COLUMN_COMMON_NAMES = "CommonNames"
-    const val TABLE_COLUMN_EDIBLE_PARTS = "EdibleParts"
-    const val TABLE_COLUMN_PROPAGATION_METHODS = "PropagationMethods"
-    const val TABLE_COLUMN_STRUCTURED_NAME_GENUS = "StructuredNameGenus"
-    const val TABLE_COLUMN_STRUCTURED_NAME_SPECIES = "StrudturedNameSpecies"
-    const val TABLE_COLUMN_SYNONYMS = "Synonyms"
-    const val TABLE_COLUMN_TAXONOMY_CLASS = "TaxonomyClass"
-    const val TABLE_COLUMN_TAXONOMY_FAMILY = "TaxonomyFamily"
-    const val TABLE_COLUMN_TAXONOMY_GENUS = "TaxonomyGenus"
-    const val TABLE_COLUMN_TAXONOMY_KINGDOM = "TaxonomyKingdom"
-    const val TABLE_COLUMN_TAXONOMY_ORDER = "TaxonomyOrder"
-    const val TABLE_COLUMN_TAXONOMY_PHYLUM = "TaxonomyPhylum"
-    const val TABLE_COLUMN_WIKIDESCRIPTION_VALUE = "Description"
-    const val TABLE_COLUMN_WIKIDESCRIPTION_LICENSE = "LicenseName"
-    const val TABLE_COLUMN_WIKIDESCRIPTION_CITATION = "Citation"
+    const val TABLE_NAME = "my_plants"
+    const val TABLE_COLUMN_ID_API = "id_api"
+    const val TABLE_COLUMN_PLANT_NAME = "name"
+    const val TABLE_COLUMN_PICTURE = "picture"
+    const val TABLE_COLUMN_DATE_ADDED = "date_added"
+    const val TABLE_COLUMN_DATE_WATERED = "date_watered"
+    const val TABLE_COLUMN_DAYS_WATERING = "days_watering"
+    const val TABLE_COLUMN_DATE_FERTILIZED = "date_fertilized"
+    const val TABLE_COLUMN_DAYS_FERTILIZING = "days_fertilizing"
+    const val TABLE_COLUMN_SCIENTIFIC_NAME = "scientific_name"
+    const val TABLE_COLUMN_COMMON_NAMES = "common_names"
+    const val TABLE_COLUMN_EDIBLE_PARTS = "edible_parts"
+    const val TABLE_COLUMN_PROPAGATION_METHODS = "propagation_methods"
+    const val TABLE_COLUMN_STRUCTURED_NAME_GENUS = "genus"
+    const val TABLE_COLUMN_STRUCTURED_NAME_SPECIES = "species"
+    const val TABLE_COLUMN_SYNONYMS = "synonyms"
+    const val TABLE_COLUMN_TAXONOMY_CLASS = "class"
+    const val TABLE_COLUMN_TAXONOMY_FAMILY = "family"
+//    const val TABLE_COLUMN_TAXONOMY_GENUS = "genus" // TODO : DELETED
+    const val TABLE_COLUMN_TAXONOMY_KINGDOM = "kingdom"
+    const val TABLE_COLUMN_TAXONOMY_ORDER = "plant_order"
+    const val TABLE_COLUMN_TAXONOMY_PHYLUM = "phylum"
+    const val TABLE_COLUMN_WIKIDESCRIPTION_VALUE = "description"
+    const val TABLE_COLUMN_WIKIDESCRIPTION_LICENSE = "description_license"
+    const val TABLE_COLUMN_WIKIDESCRIPTION_CITATION = "description_citation"
 }
 
 object CommandSQL {
@@ -64,7 +72,7 @@ object CommandSQL {
                 "${MyPlantsTable.TABLE_COLUMN_SYNONYMS} TEXT, " +
                 "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_CLASS} TEXT, " +
                 "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_FAMILY} TEXT, " +
-                "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS} TEXT, " +
+//                "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS} TEXT, " + // TODO : DELETED
                 "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_KINGDOM} TEXT, " +
                 "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_ORDER} TEXT, " +
                 "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_PHYLUM} TEXT, " +
@@ -100,6 +108,8 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
     }
 
     fun addPlantToDB (db: SQLiteDatabase?, identifiedPlant: IdentifiedPlant) {
+        val genus1 = identifiedPlant.plant_details.taxonomy?.genus
+        val genus2 = identifiedPlant.plant_details.structured_name?.genus
         val image = downscaleBitmap(BitmapFactory.decodeFile(photoFile.absolutePath), 1200)
         val image_bytes = convertBitmapToByteArray(image)
         val res = responseIdentify.get(index = 0)
@@ -116,12 +126,16 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
         values.put("${MyPlantsTable.TABLE_COLUMN_COMMON_NAMES}", nullableListStringIntoString(identifiedPlant.plant_details.common_names))
         values.put("${MyPlantsTable.TABLE_COLUMN_EDIBLE_PARTS}", nullableListStringIntoString(identifiedPlant.plant_details.edible_parts))
         values.put("${MyPlantsTable.TABLE_COLUMN_PROPAGATION_METHODS}", nullableListStringIntoString(identifiedPlant.plant_details.propagation_methods))
-        values.put("${MyPlantsTable.TABLE_COLUMN_STRUCTURED_NAME_GENUS}", identifiedPlant.plant_details.structured_name?.genus)
+        if (genus1 != null && genus1 != "") { // TODO : CHANGED
+            values.put("${MyPlantsTable.TABLE_COLUMN_STRUCTURED_NAME_GENUS}", genus1)
+        } else {
+            values.put("${MyPlantsTable.TABLE_COLUMN_STRUCTURED_NAME_GENUS}", genus2)
+        }
         values.put("${MyPlantsTable.TABLE_COLUMN_STRUCTURED_NAME_SPECIES}", identifiedPlant.plant_details.structured_name?.species)
         values.put("${MyPlantsTable.TABLE_COLUMN_SYNONYMS}", nullableListStringIntoString(identifiedPlant.plant_details.synonyms))
         values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_CLASS}", identifiedPlant.plant_details.taxonomy?.`class`)
         values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_FAMILY}", identifiedPlant.plant_details.taxonomy?.family)
-        values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS}", identifiedPlant.plant_details.taxonomy?.genus)
+        // TODO : DELETED
         values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_KINGDOM}", identifiedPlant.plant_details.taxonomy?.kingdom)
         values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_ORDER}", identifiedPlant.plant_details.taxonomy?.order)
         values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_PHYLUM}", identifiedPlant.plant_details.taxonomy?.phylum)
@@ -142,7 +156,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
 
     fun deletePlant (db: SQLiteDatabase, plant : Plant) {
         val whereClause = "${BaseColumns._ID}=?"
-        db.delete(MyPlantsTable.TABLE_NAME, whereClause, arrayOf(plant.idApi.toString()))
+        db.delete(MyPlantsTable.TABLE_NAME, whereClause, arrayOf(plant.id.toString()))
     }
 
     fun selectPlants (db: SQLiteDatabase) : ArrayList<Plant> {
@@ -150,8 +164,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
         db.let {
             val cursor = db.rawQuery(CommandSQL.SELECT, null)
             var start = cursor.moveToFirst()
-            while(start)
-            {
+            while(start) {
                 try {
                     val id = cursor.getInt(cursor.getColumnIndexOrThrow(BaseColumns._ID))
                     val idApi =
@@ -189,8 +202,9 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_CLASS))
                     val taxonomyFamily =
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_FAMILY))
-                    val taxonomyGenus =
-                        cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS))
+                    // TODO : DELETED
+//                    val taxonomyGenus =
+//                        cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS))
                     val taxonomyKingdom =
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_KINGDOM))
                     val taxonomyOrder =
@@ -224,7 +238,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                             synonyms,
                             taxonomyClass,
                             taxonomyFamily,
-                            taxonomyGenus,
+//                            taxonomyGenus, // TODO : DELETED
                             taxonomyKingdom,
                             taxonomyOrder,
                             taxonomyPhylum,
@@ -287,8 +301,8 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                 cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_CLASS))
             val taxonomyFamily =
                 cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_FAMILY))
-            val taxonomyGenus =
-                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS))
+//            val taxonomyGenus =
+//                cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS)) // TODO : DELETED
             val taxonomyKingdom =
                 cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_KINGDOM))
             val taxonomyOrder =
@@ -321,7 +335,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                     synonyms,
                     taxonomyClass,
                     taxonomyFamily,
-                    taxonomyGenus,
+//                    taxonomyGenus, // TODO : DELETED
                     taxonomyKingdom,
                     taxonomyOrder,
                     taxonomyPhylum,
@@ -383,8 +397,8 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_CLASS))
                     val taxonomyFamily =
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_FAMILY))
-                    val taxonomyGenus =
-                        cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS))
+//                    val taxonomyGenus =
+//                        cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS)) // TODO : DELETED
                     val taxonomyKingdom =
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_KINGDOM))
                     val taxonomyOrder =
@@ -418,7 +432,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                             synonyms,
                             taxonomyClass,
                             taxonomyFamily,
-                            taxonomyGenus,
+//                            taxonomyGenus, // TODO : DELETED
                             taxonomyKingdom,
                             taxonomyOrder,
                             taxonomyPhylum,

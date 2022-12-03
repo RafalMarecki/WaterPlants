@@ -1,4 +1,4 @@
-package com.example.waterplants
+package com.example.waterplants.activities
 
 import android.database.sqlite.SQLiteException
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import com.example.waterplants.R
 import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityPlantdetailsBinding
 
@@ -147,12 +148,13 @@ class PlantDetailsActivity : AppCompatActivity() {
             } else {
                 structuredNameCardView.visibility = View.GONE
             }
-            // Taxonomy
-            if ((plantChosen?.taxonomyClass != null && plantChosen?.taxonomyFamily != null && plantChosen?.taxonomyGenus != null && plantChosen?.taxonomyKingdom != null && plantChosen?.taxonomyPhylum != null && plantChosen?.taxonomyOrder != null) && (plantChosen?.taxonomyClass?.length != 0 && plantChosen?.taxonomyFamily?.length != 0 && plantChosen?.taxonomyGenus?.length != 0 && plantChosen?.taxonomyKingdom?.length != 0 && plantChosen?.taxonomyPhylum?.length != 0 && plantChosen?.taxonomyOrder?.length != 0)) {
+            // Taxonomy // TODO : CHANGED plantChosen?.taxonomyGenus TO plantChosen?.structuredNameGenus
+            if ((plantChosen?.taxonomyClass != null && plantChosen?.taxonomyFamily != null && plantChosen?.structuredNameGenus != null && plantChosen?.taxonomyKingdom != null && plantChosen?.taxonomyPhylum != null && plantChosen?.taxonomyOrder != null) && (plantChosen?.taxonomyClass?.length != 0 && plantChosen?.taxonomyFamily?.length != 0 && plantChosen?.structuredNameGenus?.length != 0 && plantChosen?.taxonomyKingdom?.length != 0 && plantChosen?.taxonomyPhylum?.length != 0 && plantChosen?.taxonomyOrder?.length != 0)) {
                 taxonomyCardView.visibility = View.VISIBLE
                 taxonomyClass.text = plantChosen?.taxonomyClass
                 taxonomyFamily.text = plantChosen?.taxonomyFamily
-                taxonomyGenus.text = plantChosen?.taxonomyGenus
+                // TODO : CHANGED plantChosen?.taxonomyGenus TO plantChosen?.structuredNameGenus
+                taxonomyGenus.text = plantChosen?.structuredNameGenus
                 taxonomyKingdom.text = plantChosen?.taxonomyKingdom
                 taxonomyPhylum.text = plantChosen?.taxonomyPhylum
             } else {

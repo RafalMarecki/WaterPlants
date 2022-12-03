@@ -1,4 +1,4 @@
-package com.example.waterplants
+package com.example.waterplants.adapters
 
 import android.app.Activity
 import android.graphics.Bitmap
@@ -8,8 +8,12 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.example.waterplants.R
+import com.example.waterplants.classes.Plant
+import com.example.waterplants.downscaleBitmap
 
-class PlantAdapter (private val context : Activity, private val arrayList: ArrayList<Plant>) : ArrayAdapter<Plant>(context, R.layout.listitem_myplants, arrayList){
+class PlantAdapter (private val context : Activity, private val arrayList: ArrayList<Plant>) : ArrayAdapter<Plant>(context,
+    R.layout.listitem_myplants, arrayList){
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View
     {
         val inflater : LayoutInflater = LayoutInflater.from(context)

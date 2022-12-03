@@ -1,7 +1,8 @@
-package com.example.waterplants
+package com.example.waterplants.activities
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.waterplants.R
 
 class ActivityNoResults : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

@@ -1,4 +1,4 @@
-package com.example.waterplants
+package com.example.waterplants.activities
 
 import android.content.Intent
 import android.graphics.Bitmap
@@ -6,7 +6,12 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.waterplants.R
+import com.example.waterplants.adapters.ChoosePlantAdapter
+import com.example.waterplants.classes.IdentifiedPlant
 import com.example.waterplants.databinding.ActivityChooseplantBinding
+import com.example.waterplants.identifiedPlantArrayList
+import com.example.waterplants.responseIdentify
 import java.io.ByteArrayOutputStream
 
 // UWAGA ZMIENNA GLOBALNA

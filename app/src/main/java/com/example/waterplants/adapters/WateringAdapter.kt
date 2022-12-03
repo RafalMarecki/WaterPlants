@@ -1,13 +1,16 @@
-package com.example.waterplants
+package com.example.waterplants.adapters
 
 import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import com.example.waterplants.R
+import com.example.waterplants.classes.Plant
 import com.example.waterplants.database.DataBaseHelper
 
-class WateringAdapter (private val context : Activity, private val arrayList: ArrayList<Plant>) : ArrayAdapter<Plant>(context, R.layout.listitem_watering, arrayList){
+class WateringAdapter (private val context : Activity, private val arrayList: ArrayList<Plant>) : ArrayAdapter<Plant>(context,
+    R.layout.listitem_watering, arrayList){
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater : LayoutInflater = LayoutInflater.from(context)
         val view : View = inflater.inflate(R.layout.listitem_watering, null)

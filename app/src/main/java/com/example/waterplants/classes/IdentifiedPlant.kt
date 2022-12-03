@@ -1,4 +1,4 @@
-package com.example.waterplants
+package com.example.waterplants.classes
 
 import com.example.waterplants.api.model.PlantDetails
 

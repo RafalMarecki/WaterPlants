@@ -1,4 +1,4 @@
-package com.example.waterplants
+package com.example.waterplants.adapters
 
 import android.app.Activity
 import android.content.Intent
@@ -10,10 +10,14 @@ import android.widget.ArrayAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import com.example.waterplants.R
+import com.example.waterplants.activities.MyPlantsActivity
+import com.example.waterplants.classes.IdentifiedPlant
 import com.example.waterplants.database.DataBaseHelper
 import com.squareup.picasso.Picasso
 
-class ChoosePlantAdapter(private val context : Activity, private val identifiedPlantArrayList : ArrayList<IdentifiedPlant>) : ArrayAdapter<IdentifiedPlant>(context, R.layout.listitem_chooseplant, identifiedPlantArrayList){
+class ChoosePlantAdapter(private val context : Activity, private val identifiedPlantArrayList : ArrayList<IdentifiedPlant>) : ArrayAdapter<IdentifiedPlant>(context,
+    R.layout.listitem_chooseplant, identifiedPlantArrayList){
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
         val inflater : LayoutInflater = LayoutInflater.from(context)
         val view : View = inflater.inflate(R.layout.listitem_chooseplant, null)

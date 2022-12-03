@@ -1,4 +1,4 @@
-package com.example.waterplants
+package com.example.waterplants.activities
 
 import android.content.Intent
 import android.database.sqlite.SQLiteException
@@ -10,9 +10,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import com.example.waterplants.R
 import com.example.waterplants.api.model.PlantDetails
 import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityChooseplantdetailsBinding
+import com.example.waterplants.identifiedPlantArrayList
 import com.squareup.picasso.Picasso
 
 class ChoosePlantDetailsActivity : AppCompatActivity() {
