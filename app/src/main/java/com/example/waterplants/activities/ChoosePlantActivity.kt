@@ -1,8 +1,6 @@
 package com.example.waterplants.activities
 
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,7 +10,6 @@ import com.example.waterplants.classes.IdentifiedPlant
 import com.example.waterplants.databinding.ActivityChooseplantBinding
 import com.example.waterplants.identifiedPlantArrayList
 import com.example.waterplants.responseIdentify
-import java.io.ByteArrayOutputStream
 
 // UWAGA ZMIENNA GLOBALNA
 var chosenPlant : IdentifiedPlant? = null
@@ -58,36 +55,3 @@ class ChoosePlantActivity : AppCompatActivity() {
         identifiedPlantArrayList.clear()
     }
 }
- fun convertBitmapToByteArray (bitmap : Bitmap) : ByteArray {
-     val baos = ByteArrayOutputStream()
-     bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos)
-     return baos.toByteArray()
- }
-
-fun convertByteArrayToBitmap (byteArray: ByteArray) : Bitmap {
-    return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
-}
-
-fun returnPlantDaysWatering (identifiedPlant: IdentifiedPlant) : Int {
-    val watering = identifiedPlant.plant_details.watering
-    if (watering != null) {
-        val min = identifiedPlant.plant_details.watering?.min
-        val max = identifiedPlant.plant_details.watering?.max
-        if (max == 1) {
-            return 14
-        } else if (min == 3) {
-            return 3
-        } else if (min == 2 && max == 3) {
-            return 10
-        } else if (min == 2 && max == 2) {
-            return 7
-        } else if (min == 1 && max == 2) {
-            return 5
-        } else if (min == 1 && max == 3) {
-            return 9
-        }
-    }
-    return 7 // Default value
-}
-
-

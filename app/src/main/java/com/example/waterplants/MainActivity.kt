@@ -2,12 +2,10 @@ package com.example.waterplants
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.util.Base64
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +25,7 @@ import com.example.waterplants.classes.IdentifiedPlant
 import com.example.waterplants.classes.MenuItem
 import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityMainBinding
+import com.example.waterplants.utils.encodeImageBase64
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import java.io.File
@@ -103,11 +102,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Encoding image file to string Base64
-    fun encodeImageBase64(photoFile: File): String {
-        return Base64.encodeToString(photoFile.readBytes(), Base64.NO_WRAP)
-    }
-
     // Getting temporary file in image directory
     private fun getPhotoFile(fileName: String) : File {
         val directory = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
@@ -152,28 +146,3 @@ class MainActivity : AppCompatActivity() {
         }
 }
 
-fun downscaleBitmap(image : Bitmap, maxLength : Int) : Bitmap {
-    try {
-        if (image.height >= image.width) {
-            if (image.height <= maxLength) { // If image is alredy good enough size
-                return image
-            }
-
-            val aspectRatio = image.width.toDouble() / image.height.toDouble()
-            val targetWidth = (maxLength * aspectRatio).toInt()
-            val image = Bitmap.createScaledBitmap(image, targetWidth, maxLength, false)
-            return image
-        } else {
-            if (image.width <= maxLength) {  // If image is alredy good enough size
-                return image
-            }
-
-            val aspectRatio = image.height.toDouble() / image.width.toDouble()
-            val targetHeight = (maxLength * aspectRatio).toInt()
-            val image = Bitmap.createScaledBitmap(image, maxLength, targetHeight, false)
-            return image
-        }
-    } catch (e: Exception) {
-        return image
-    }
-}

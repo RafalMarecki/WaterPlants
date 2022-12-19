@@ -10,15 +10,15 @@ import android.graphics.BitmapFactory
 import android.provider.BaseColumns
 import android.util.Log
 import androidx.core.database.getStringOrNull
-import com.example.waterplants.activities.convertBitmapToByteArray
-import com.example.waterplants.activities.convertByteArrayToBitmap
-import com.example.waterplants.activities.nullableListStringIntoString
-import com.example.waterplants.activities.returnPlantDaysWatering
+import com.example.waterplants.utils.nullableListStringIntoString
 import com.example.waterplants.classes.IdentifiedPlant
 import com.example.waterplants.classes.Plant
-import com.example.waterplants.downscaleBitmap
 import com.example.waterplants.photoFile
 import com.example.waterplants.responseIdentify
+import com.example.waterplants.utils.convertBitmapToByteArray
+import com.example.waterplants.utils.convertByteArrayToBitmap
+import com.example.waterplants.utils.downscaleBitmap
+import com.example.waterplants.utils.returnPlantDaysWatering
 import java.lang.reflect.Field
 import java.time.LocalDate
 import java.time.ZoneId
@@ -72,7 +72,6 @@ object CommandSQL {
                 "${MyPlantsTable.TABLE_COLUMN_SYNONYMS} TEXT, " +
                 "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_CLASS} TEXT, " +
                 "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_FAMILY} TEXT, " +
-//                "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS} TEXT, " + // TODO : DELETED
                 "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_KINGDOM} TEXT, " +
                 "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_ORDER} TEXT, " +
                 "${MyPlantsTable.TABLE_COLUMN_TAXONOMY_PHYLUM} TEXT, " +
@@ -126,7 +125,7 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
         values.put("${MyPlantsTable.TABLE_COLUMN_COMMON_NAMES}", nullableListStringIntoString(identifiedPlant.plant_details.common_names))
         values.put("${MyPlantsTable.TABLE_COLUMN_EDIBLE_PARTS}", nullableListStringIntoString(identifiedPlant.plant_details.edible_parts))
         values.put("${MyPlantsTable.TABLE_COLUMN_PROPAGATION_METHODS}", nullableListStringIntoString(identifiedPlant.plant_details.propagation_methods))
-        if (genus1 != null && genus1 != "") { // TODO : CHANGED
+        if (genus1 != null && genus1 != "") {
             values.put("${MyPlantsTable.TABLE_COLUMN_STRUCTURED_NAME_GENUS}", genus1)
         } else {
             values.put("${MyPlantsTable.TABLE_COLUMN_STRUCTURED_NAME_GENUS}", genus2)
@@ -135,7 +134,6 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
         values.put("${MyPlantsTable.TABLE_COLUMN_SYNONYMS}", nullableListStringIntoString(identifiedPlant.plant_details.synonyms))
         values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_CLASS}", identifiedPlant.plant_details.taxonomy?.`class`)
         values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_FAMILY}", identifiedPlant.plant_details.taxonomy?.family)
-        // TODO : DELETED
         values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_KINGDOM}", identifiedPlant.plant_details.taxonomy?.kingdom)
         values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_ORDER}", identifiedPlant.plant_details.taxonomy?.order)
         values.put("${MyPlantsTable.TABLE_COLUMN_TAXONOMY_PHYLUM}", identifiedPlant.plant_details.taxonomy?.phylum)
@@ -202,9 +200,6 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_CLASS))
                     val taxonomyFamily =
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_FAMILY))
-                    // TODO : DELETED
-//                    val taxonomyGenus =
-//                        cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS))
                     val taxonomyKingdom =
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_KINGDOM))
                     val taxonomyOrder =
@@ -238,7 +233,6 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                             synonyms,
                             taxonomyClass,
                             taxonomyFamily,
-//                            taxonomyGenus, // TODO : DELETED
                             taxonomyKingdom,
                             taxonomyOrder,
                             taxonomyPhylum,
@@ -254,7 +248,6 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                 start = cursor.moveToNext()
             }
             cursor.close()
-//            db.close()
         }
         return plantList
     }
@@ -397,8 +390,6 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_CLASS))
                     val taxonomyFamily =
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_FAMILY))
-//                    val taxonomyGenus =
-//                        cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_GENUS)) // TODO : DELETED
                     val taxonomyKingdom =
                         cursor.getStringOrNull(cursor.getColumnIndexOrThrow(MyPlantsTable.TABLE_COLUMN_TAXONOMY_KINGDOM))
                     val taxonomyOrder =
@@ -432,7 +423,6 @@ class DataBaseHelper(context: Context) : SQLiteOpenHelper(context, MyPlantsTable
                             synonyms,
                             taxonomyClass,
                             taxonomyFamily,
-//                            taxonomyGenus, // TODO : DELETED
                             taxonomyKingdom,
                             taxonomyOrder,
                             taxonomyPhylum,

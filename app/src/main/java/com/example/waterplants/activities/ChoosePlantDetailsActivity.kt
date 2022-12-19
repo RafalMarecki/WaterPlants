@@ -15,6 +15,7 @@ import com.example.waterplants.api.model.PlantDetails
 import com.example.waterplants.database.DataBaseHelper
 import com.example.waterplants.databinding.ActivityChooseplantdetailsBinding
 import com.example.waterplants.identifiedPlantArrayList
+import com.example.waterplants.utils.nullableListStringIntoString
 import com.squareup.picasso.Picasso
 
 class ChoosePlantDetailsActivity : AppCompatActivity() {
@@ -151,20 +152,4 @@ class ChoosePlantDetailsActivity : AppCompatActivity() {
             }
         }
     }
-}
-
-fun nullableListStringIntoString (list : List<String>?) : String {
-    var text = ""
-    if (list != null) {
-        list?.let {
-            for (i in it.indices) {
-                if (i == 0) {
-                    text += it.get(index = i)
-                } else {
-                    text += "\n" + it.get(index = i)
-                }
-            }
-        }
-    }
-    return text
 }

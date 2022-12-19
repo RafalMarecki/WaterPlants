@@ -46,6 +46,7 @@
         <activity android:name=".activities.WateringActivity"></activity>
         <activity android:name=".activities.FertilizingActivity"></activity>
         <activity android:name=".activities.ActivityNoResults"></activity>
+
     </application>
 
 </manifest>

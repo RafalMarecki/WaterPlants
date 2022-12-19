@@ -4,7 +4,10 @@ import android.app.Activity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import com.example.waterplants.R
 import com.example.waterplants.classes.Plant
 import com.example.waterplants.database.DataBaseHelper
@@ -28,11 +31,11 @@ class WateringAdapter (private val context : Activity, private val arrayList: Ar
 
         button.setOnClickListener {
             dbHelper.updateWatering(db, plant)
-            Toast.makeText(
-                context,
-                "${plant.dateAdded}, ${plant.dateWatered}, ${plant.daysWatering}",
-                Toast.LENGTH_SHORT
-            ).show()
+//            Toast.makeText(
+//                context,
+//                "${plant.dateAdded}, ${plant.dateWatered}, ${plant.daysWatering}",
+//                Toast.LENGTH_SHORT
+//            ).show()
             button.text = "DONE"
             button.isClickable = false
             button.setBackgroundResource(R.drawable.shape_watered_button)

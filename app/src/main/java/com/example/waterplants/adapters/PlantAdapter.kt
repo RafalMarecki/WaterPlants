@@ -10,7 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.waterplants.R
 import com.example.waterplants.classes.Plant
-import com.example.waterplants.downscaleBitmap
+import com.example.waterplants.utils.downscaleBitmap
 
 class PlantAdapter (private val context : Activity, private val arrayList: ArrayList<Plant>) : ArrayAdapter<Plant>(context,
     R.layout.listitem_myplants, arrayList){
