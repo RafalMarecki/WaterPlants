@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.waterplants.MainActivity
 import com.example.waterplants.R
 import com.example.waterplants.adapters.ChoosePlantAdapter
 import com.example.waterplants.classes.IdentifiedPlant
@@ -53,5 +54,9 @@ class ChoosePlantActivity : AppCompatActivity() {
         this.finish()
         responseIdentify.clear()
         identifiedPlantArrayList.clear()
+        val intent = Intent(this@ChoosePlantActivity, MainActivity::class.java)
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        overridePendingTransition (0, 0)
+        startActivity(intent)
     }
 }

@@ -72,5 +72,7 @@ class MyPlantsActivity : AppCompatActivity() {
         val intent = Intent(this@MyPlantsActivity, MainActivity::class.java)
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         startActivity(intent)
+        // Dodaj tę linię, aby zakończyć bieżącą aktywność
+        finish ()
     }
 }

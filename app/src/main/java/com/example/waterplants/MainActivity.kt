@@ -1,12 +1,14 @@
 package com.example.waterplants
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -83,7 +85,6 @@ class MainActivity : AppCompatActivity() {
                 2 -> startActivity(Intent(applicationContext, FertilizingActivity::class.java))
             }
         }
-
         // Camera button handling
         binding.buttonCamera.isClickable = true
         binding.buttonCamera.setOnClickListener{
@@ -114,6 +115,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, "Processing identification...", Toast.LENGTH_SHORT).show()
             // Sending image to API, assigning results to global ArrayList of identified plants and starting ChoosePlantActivity
             lifecycleScope.launch {
+                showLoadingScreen()
                 val res = sendImageToAPI(encodeImageBase64(photoFile)).await()
                 responseIdentify.add(res)
                 if (res.is_plant && res.is_plant_probability >= PLANT_PROBABILITY_ACCEPTED) {
@@ -135,6 +137,14 @@ class MainActivity : AppCompatActivity() {
         else {
             super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    private fun showLoadingScreen () {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.activity_loading)
+        dialog.show()
     }
 
     // Sending image to api and returning a response
