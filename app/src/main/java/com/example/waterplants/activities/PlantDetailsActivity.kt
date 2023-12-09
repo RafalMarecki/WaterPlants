@@ -1,13 +1,15 @@
 package com.example.waterplants.activities
 
+import android.app.Dialog
+import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.view.Window
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.example.waterplants.R
@@ -191,19 +193,50 @@ class PlantDetailsActivity : AppCompatActivity() {
             }
             // Deleting plant
             deleteButton.setOnClickListener {
-                try {
-                    dbHelper.deletePlant(db, plantChosen!!)
-                    toastDeleted.show()
-                    onBackPressed()
-                } catch (e : SQLiteException) {
-                    toastErrorDeleted.show()
-                    throw e
-                }
+                showDialogConfirmDelete(dbHelper, db)
+//                try {
+//                    dbHelper.deletePlant(db, plantChosen!!)
+//                    toastDeleted.show()
+//                    onBackPressed()
+//                } catch (e : SQLiteException) {
+//                    toastErrorDeleted.show()
+//                    throw e
+//                }
             }
         } else {
             onBackPressed()
             errorToast.show()
         }
+    }
+
+    private fun showDialogConfirmDelete (dbHelper: DataBaseHelper, db : SQLiteDatabase) {
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(R.layout.dialog_delete_plant)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+        val buttonYes : Button = dialog.findViewById(R.id.yes_button)
+        val buttonNo : Button = dialog.findViewById(R.id.no_button)
+
+        buttonYes.setOnClickListener {
+            try {
+                dbHelper.deletePlant(db, plantChosen!!)
+                dialog.dismiss()
+                //toastDeleted.show()
+                onBackPressed()
+            } catch (e : SQLiteException) {
+                dialog.dismiss()
+                //toastErrorDeleted.show()
+                throw e
+            }
+        }
+
+        buttonNo.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     override fun onBackPressed() {

@@ -197,16 +197,31 @@
             android:background="@drawable/shape_water_button"
             android:text="@string/save"
             android:textColor="#FFFFFF"
+            android:layout_marginBottom="5dp"
             android:shadowColor="#454545"
             android:shadowDx="0"
             android:shadowDy="0"
             android:shadowRadius="5" />
+        <!--DELETE BUTTON-->
+        <android.widget.Button
+            android:id="@+id/plantdetails_delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/plantdetails_save_button"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/shape_delete_button"
+            android:text="@string/delete"
+            android:textColor="#FFFFFF"
+            android:shadowColor="#454545"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"/>
         <!--DESCROPTION-->
         <androidx.cardview.widget.CardView
             android:id="@+id/plantdetails_description_cardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/plantdetails_save_button"
+            android:layout_below="@id/plantdetails_delete_button"
             app:cardCornerRadius="20dp"
             android:layout_margin="5dp">
             <RelativeLayout
@@ -622,19 +637,19 @@
                     android:textStyle="italic"/>
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
-        <!--DELETE BUTTON-->
-        <android.widget.Button
-            android:id="@+id/plantdetails_delete_button"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_below="@id/plantdetails_taxonomy_cardview"
-            android:layout_marginBottom="5dp"
-            android:background="@drawable/shape_delete_button"
-            android:text="@string/delete"
-            android:textColor="#FFFFFF"
-            android:shadowColor="#454545"
-            android:shadowDx="0"
-            android:shadowDy="0"
-            android:shadowRadius="5"/>
+<!--        &lt;!&ndash;DELETE BUTTON&ndash;&gt;-->
+<!--        <android.widget.Button-->
+<!--            android:id="@+id/plantdetails_delete_button"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_below="@id/plantdetails_taxonomy_cardview"-->
+<!--            android:layout_marginBottom="5dp"-->
+<!--            android:background="@drawable/shape_delete_button"-->
+<!--            android:text="@string/delete"-->
+<!--            android:textColor="#FFFFFF"-->
+<!--            android:shadowColor="#454545"-->
+<!--            android:shadowDx="0"-->
+<!--            android:shadowDy="0"-->
+<!--            android:shadowRadius="5"/>-->
     </RelativeLayout>
 </ScrollView>
