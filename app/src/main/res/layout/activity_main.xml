@@ -26,7 +26,22 @@
             android:outlineAmbientShadowColor="@color/black">
             <android.widget.Button
                 android:id="@+id/button_camera"
-                android:text="+"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/shape_water_button"
+                android:focusable="false"
+                android:shadowColor="#454545"
+                android:shadowDx="0"
+                android:shadowDy="0"
+                android:shadowRadius="5"
+                android:text="Add plant"
+                android:textColor="#FFFFFF" />
+            <!--<android.widget.Button
+                android:id="@+id/button_camera"
+                android:text="Add plant"
                 android:textColor="#FFFFFF"
                 android:textSize="60sp"
                 android:textAlignment="center"
@@ -39,7 +54,7 @@
                 android:shadowColor="@color/black"
                 android:shadowDx="0"
                 android:shadowDy="0"
-                android:shadowRadius="8"/>
+                android:shadowRadius="8"/>-->
         </androidx.cardview.widget.CardView>
     </RelativeLayout>
 

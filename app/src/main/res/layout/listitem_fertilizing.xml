@@ -47,31 +47,36 @@
                     android:background="@color/white"
                     android:scaleType="centerCrop"/>
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/fertilizing_rigt_pannel_cardview"
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                app:cardCornerRadius="20dp"
-                android:layout_margin="5dp"
-                android:elevation="10dp"
                 android:layout_alignParentRight="true"
-                android:layout_toRightOf="@id/fertilizing_image_cardview">
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_toRightOf="@id/fertilizing_image_cardview"
+                android:elevation="10dp"
+                android:orientation="vertical"
+                app:cardCornerRadius="20dp">
+
                 <android.widget.Button
                     android:id="@+id/fertilizing_button"
-                    android:focusable="false"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    android:textColor="#FFFFFF"
-                    android:text="@string/fertilize"
                     android:background="@drawable/shape_water_button"
+                    android:focusable="false"
                     android:shadowColor="#454545"
                     android:shadowDx="0"
                     android:shadowDy="0"
-                    android:shadowRadius="5"/>
+                    android:shadowRadius="5"
+                    android:text="@string/fertilize"
+                    android:textColor="#FFFFFF" />
             </androidx.cardview.widget.CardView>
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
